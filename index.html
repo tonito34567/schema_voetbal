@@ -125,8 +125,7 @@ const WEDSTRIJDEN = [
   {id:12, datum:'2026-05-16', thuis:false, tegenstander:'DOVO JO15-3',           tijd:'09:00', locatie:'Veenendaal',   soort:''},
 ];
 
-// Thuiswedstrijden met kantinedienst (id 11 = ook kantinedag)
-const KANTINE_WEDSTRIJDEN = WEDSTRIJDEN.filter(w => w.thuis);
+// Kantinedienst: vaste datum 11 april 2026, los van wedstrijden
 
 let state = { vlag:{}, rij:{}, spelers:[], stands:{}, kantine:{} };
 const today = new Date(); today.setHours(0,0,0,0);
@@ -316,41 +315,53 @@ function renderRij() {
 
 // ── RENDER KANTINE ───────────────────────────────────────────
 function renderKantine() {
-  let cards = '';
-  KANTINE_WEDSTRIJDEN.forEach(function(w) {
-    const past = isPast(w.datum);
-    const k = state.kantine[w.id] || {};
-    const bardienst = k.bardienst || '';
-    const keuken = k.keuken || '';
+  const k = state.kantine[99] || {};
+  const bar1  = k.bar1  || '';
+  const bar2  = k.bar2  || '';
+  const keuken = k.keuken || '';
+  const past = isPast('2026-04-11');
 
-    cards += '<div class="kantine-card' + (past ? '" style="opacity:.6"' : '"') + '>'
-      + '<div class="kantine-datum">' + fmtShort(w.datum) + '</div>'
-      + '<div class="kantine-tegenstander">' + w.tegenstander + '</div>'
-      + '<div class="kantine-row"><span class="kantine-rol">Bardienst:</span>'
-      + (bardienst ? '<span class="badge b-ok">' + bardienst + '</span>' : '<span class="badge b-ntb">ntb</span>')
-      + '</div>'
-      + '<div class="kantine-row"><span class="kantine-rol">Keuken:</span>'
-      + (keuken ? '<span class="badge b-ok">' + keuken + '</span>' : '<span class="badge b-ntb">ntb</span>')
-      + '</div>'
-      + (!past ? '<button class="btn btn-sm" style="margin-top:8px;" onclick="prefillKantine(' + w.id + ')">Wijzig</button>' : '')
-      + '</div>';
-  });
-
-  let opts = '';
-  KANTINE_WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); }).forEach(function(w) {
-    opts += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
-  });
+  const mkBadge = function(v) {
+    return v ? '<span class="badge b-ok">' + v + '</span>' : '<span class="badge b-ntb">Nog te bepalen</span>';
+  };
 
   document.getElementById('kantine').innerHTML = '<div class="card">'
-    + '<div class="card-header"><span class="card-title">Kantinedienst</span><span style="font-size:12px;color:var(--text-muted);">alleen thuiswedstrijden</span></div>'
-    + '<div class="kantine-grid">' + cards + '</div>'
-    + '<div class="edit-panel"><div class="edit-label">Kantinedienst aanpassen</div>'
-    + '<div class="edit-row" style="flex-wrap:wrap;gap:8px;">'
-    + '<select id="kantine-wed" style="flex:2;min-width:180px;">' + opts + '</select>'
-    + '<input type="text" id="kantine-bardienst" placeholder="Bardienst (namen)" style="flex:1;min-width:140px;" />'
-    + '<input type="text" id="kantine-keuken" placeholder="Keuken (namen)" style="flex:1;min-width:140px;" />'
-    + '<button id="btn-kantine" class="btn btn-green" onclick="updateKantine()">Opslaan</button>'
-    + '</div></div></div>';
+    + '<div class="card-header">'
+    + '<span class="card-title">Kantinedienst</span>'
+    + '<span style="font-size:12px;color:var(--text-muted);">zaterdag 11 april 2026</span>'
+    + '</div>'
+    + '<div style="padding:20px;">'
+
+    // Bardienst blok
+    + '<div style="margin-bottom:20px;">'
+    + '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:10px;">Bardienst &mdash; 12:30 tot 16:45</div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'
+    + '<div class="kantine-card"><div class="kantine-rol" style="margin-bottom:6px;">Persoon 1</div>' + mkBadge(bar1) + '</div>'
+    + '<div class="kantine-card"><div class="kantine-rol" style="margin-bottom:6px;">Persoon 2</div>' + mkBadge(bar2) + '</div>'
+    + '</div></div>'
+
+    // Keukendienst blok
+    + '<div style="margin-bottom:8px;">'
+    + '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:10px;">Keukendienst &mdash; 15:00 tot 18:00</div>'
+    + '<div style="max-width:300px;">'
+    + '<div class="kantine-card"><div class="kantine-rol" style="margin-bottom:6px;">Persoon 1</div>' + mkBadge(keuken) + '</div>'
+    + '</div></div>'
+    + '</div>'
+
+    // Edit panel
+    + (past ? '' :
+      '<div class="edit-panel"><div class="edit-label">Namen invullen</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">'
+      + '<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Bardienst persoon 1</div>'
+      + '<input type="text" id="kantine-bar1" placeholder="Naam" value="' + bar1 + '" /></div>'
+      + '<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Bardienst persoon 2</div>'
+      + '<input type="text" id="kantine-bar2" placeholder="Naam" value="' + bar2 + '" /></div>'
+      + '<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Keukendienst persoon 1</div>'
+      + '<input type="text" id="kantine-keuken" placeholder="Naam" value="' + keuken + '" /></div>'
+      + '</div>'
+      + '<button id="btn-kantine" class="btn btn-green" onclick="updateKantine()">Opslaan</button>'
+      + '</div>')
+    + '</div>';
 }
 
 // ── RENDER SPELERS ───────────────────────────────────────────
@@ -400,15 +411,7 @@ function prefillStand(id) {
   if (s) s.value = id;
   if (i) { const v = state.stands[id] || ''; i.value = v === '-' ? '' : v; i.focus(); }
 }
-function prefillKantine(id) {
-  const s = document.getElementById('kantine-wed');
-  const b = document.getElementById('kantine-bardienst');
-  const k = document.getElementById('kantine-keuken');
-  if (s) s.value = id;
-  const kt = state.kantine[id] || {};
-  if (b) b.value = kt.bardienst || '';
-  if (k) { k.value = kt.keuken || ''; k.focus(); }
-}
+function prefillKantine(id) { /* niet meer gebruikt */ }
 
 // ── UPDATES ──────────────────────────────────────────────────
 async function updateVlag() {
@@ -453,16 +456,16 @@ async function updateStand() {
 }
 
 async function updateKantine() {
-  const id = parseInt(document.getElementById('kantine-wed').value);
-  const bardienst = document.getElementById('kantine-bardienst').value.trim();
-  const keuken = document.getElementById('kantine-keuken').value.trim();
-  if (!id) return;
+  const bar1   = (document.getElementById('kantine-bar1')   || {}).value || '';
+  const bar2   = (document.getElementById('kantine-bar2')   || {}).value || '';
+  const keuken = (document.getElementById('kantine-keuken') || {}).value || '';
   setBusy('btn-kantine', true);
   try {
-    await api({ action:'saveKantine', id:id, bardienst:bardienst, keuken:keuken });
-    if (!state.kantine[id]) state.kantine[id] = {};
-    state.kantine[id].bardienst = bardienst;
-    state.kantine[id].keuken = keuken;
+    await api({ action:'saveKantine', id:99, bardienst:bar1 + '|' + bar2, keuken:keuken });
+    if (!state.kantine[99]) state.kantine[99] = {};
+    state.kantine[99].bar1   = bar1.trim();
+    state.kantine[99].bar2   = bar2.trim();
+    state.kantine[99].keuken = keuken.trim();
     renderKantine();
     showToast('Kantinedienst opgeslagen \u2713');
   } catch(e) { showToast('Opslaan mislukt', true); }
