@@ -119,7 +119,9 @@ let state={vlag:{},rij:{},spelers:[],stands:{}};
 const today=new Date();today.setHours(0,0,0,0);
 async function api(p){
   const url=SCRIPT_URL+'?'+new URLSearchParams(p).toString();
-  const r=await fetch(url);return r.json();
+  const r=await fetch(url,{redirect:'follow'});
+  const text=await r.text();
+  try{return JSON.parse(text);}catch(e){throw new Error('Geen geldig JSON');}
 }
 async function loadData(){
   try{
@@ -153,9 +155,12 @@ function renderOverzicht(){
     const sb=w.soort==='beker'?'<span class="badge b-beker" style="margin-left:5px;">Beker</span>':w.soort==='oefenwedstrijd'?'<span class="badge b-oef" style="margin-left:5px;">Oef</span>':'';
     const st=state.stands[w.id]||'';
     const sc=st&&st!==''&&st!=='-'?`<b style="font-family:'Barlow Condensed',sans-serif;">${st}</b>`:'<span style="color:var(--text-muted);">—</span>';
-    return`<tr class="${past?'past':''}"><td style="white-space:nowrap;">${fmtShort(w.datum)}</td><td>${w.tegenstander}${sb}</td><td><span class="badge ${w.thuis?'b-thuis':'b-uit'}">${w.thuis?'Thuis':'Uit'}</span></td><td>${w.tijd}</td><td>${w.locatie}</td><td>${sc}</td></tr>`;
+    const standEdit=`<button class="btn btn-sm" onclick="prefillStand(${w.id})" style="margin-left:6px;">Wijzig</button>`;
+    return`<tr class="${past?'past':''}"><td style="white-space:nowrap;">${fmtShort(w.datum)}</td><td>${w.tegenstander}${sb}</td><td><span class="badge ${w.thuis?'b-thuis':'b-uit'}">${w.thuis?'Thuis':'Uit'}</span></td><td>${w.tijd}</td><td>${w.locatie}</td><td>${sc} ${standEdit}</td></tr>`;
   }).join('');
-  document.getElementById('overzicht').innerHTML=nb+sg+`<div class="card"><div class="card-header"><span class="card-title">Alle wedstrijden</span></div><table><thead><tr><th>Datum</th><th>Tegenstander</th><th></th><th>Tijd</th><th>Locatie</th><th>Stand</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  const optsGespeeld=WEDSTRIJDEN.filter(w=>isPast(w.datum)).map(w=>`<option value="${w.id}">${fmtShort(w.datum)} — ${w.tegenstander}</option>`).join('');
+  document.getElementById('overzicht').innerHTML=nb+sg+`<div class="card"><div class="card-header"><span class="card-title">Alle wedstrijden</span></div><table><thead><tr><th>Datum</th><th>Tegenstander</th><th></th><th>Tijd</th><th>Locatie</th><th>Stand</th></tr></thead><tbody>${rows}</tbody></table><div class="edit-panel"><div class="edit-label">Eindstand invullen</div><div class="edit-row"><select id="stand-wed" style="flex:2;min-width:180px;">${optsGespeeld}</select><input type="text" id="stand-score" placeholder="bijv. 3-1" style="flex:1;min-width:100px;"/><button id="btn-stand" class="btn btn-green" onclick="updateStand()">Opslaan</button></div></div></div>`;"
+
 }
 function renderVlag(){
   const rows=WEDSTRIJDEN.map(w=>{
@@ -212,6 +217,18 @@ async function removeSpeler(naam){
   if(!confirm(naam+' verwijderen?'))return;
   try{await api({action:'removeSpeler',naam});state.spelers=state.spelers.filter(s=>s.naam!==naam);renderSpelers();renderOverzicht();showToast(naam+' verwijderd');}
   catch(e){showToast('Verwijderen mislukt',true);}
+}
+function prefillStand(id){
+  const s=document.getElementById('stand-wed');const i=document.getElementById('stand-score');
+  if(s)s.value=id;if(i){const v=state.stands[id]||'';i.value=v==='-'?'':v;i.focus();}
+}
+async function updateStand(){
+  const id=parseInt(document.getElementById('stand-wed').value);
+  const stand=document.getElementById('stand-score').value.trim();
+  if(!stand)return;setBusy('btn-stand',true);
+  try{await api({action:'saveStand',id,stand});state.stands[id]=stand;renderOverzicht();showToast('Eindstand opgeslagen ✓');}
+  catch(e){showToast('Opslaan mislukt',true);}
+  setBusy('btn-stand',false);
 }
 function showTab(name,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
