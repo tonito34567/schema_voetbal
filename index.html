@@ -6,7 +6,7 @@
 <title>FC Driebergen JO15-2 — Schema</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--green:#1a5c2a;--green-mid:#2d7a40;--green-light:#e8f5ec;--green-accent:#4caf6e;--amber-light:#fff8e6;--red:#c0392b;--red-light:#fdecea;--white:#ffffff;--off-white:#f7f8f6;--border:#dde5df;--text:#1a2620;--text-mid:#4a6055;--text-muted:#8aa090;--radius:10px;--radius-sm:6px}
+:root{--green:#1a5c2a;--green-mid:#2d7a40;--green-light:#e8f5ec;--green-accent:#4caf6e;--amber-light:#fff8e6;--red:#c0392b;--red-light:#fdecea;--white:#fff;--off-white:#f7f8f6;--border:#dde5df;--text:#1a2620;--text-mid:#4a6055;--text-muted:#8aa090;--radius:10px;--radius-sm:6px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Barlow',sans-serif;background:var(--off-white);color:var(--text);min-height:100vh}
 header{background:var(--green);color:white;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
@@ -15,8 +15,8 @@ header{background:var(--green);color:white;position:sticky;top:0;z-index:100;box
 .header-sub{font-size:12px;opacity:.7;margin-top:1px}
 .badge-seizoen{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:white;font-size:12px;padding:4px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif}
 .tabs-bar{background:var(--green);border-top:1px solid rgba(255,255,255,.1)}
-.tabs-inner{max-width:900px;margin:0 auto;padding:0 20px;display:flex}
-.tab-btn{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:600;letter-spacing:.5px;padding:10px 18px;color:rgba(255,255,255,.6);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase}
+.tabs-inner{max-width:900px;margin:0 auto;padding:0 20px;display:flex;overflow-x:auto}
+.tab-btn{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:.5px;padding:10px 14px;color:rgba(255,255,255,.6);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;white-space:nowrap}
 .tab-btn:hover{color:rgba(255,255,255,.9)}
 .tab-btn.active{color:white;border-bottom-color:var(--green-accent)}
 main{max-width:900px;margin:0 auto;padding:24px 20px}
@@ -65,6 +65,12 @@ select:focus,input[type=text]:focus{border-color:var(--green-mid)}
 .next-right{text-align:right}
 .next-dag{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;line-height:1}
 .next-maand{font-size:13px;opacity:.7;text-transform:uppercase;letter-spacing:1px}
+.kantine-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:16px 20px}
+.kantine-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px}
+.kantine-datum{font-size:12px;color:var(--text-muted);margin-bottom:4px}
+.kantine-tegenstander{font-size:14px;font-weight:500;margin-bottom:8px}
+.kantine-row{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:4px}
+.kantine-rol{color:var(--text-muted);min-width:60px}
 .loading{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:14px}
 .spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -79,170 +85,430 @@ select:focus,input[type=text]:focus{border-color:var(--green-mid)}
   <div class="header-inner">
     <div>
       <div class="header-title">FC Driebergen — JO15-2</div>
-      <div class="header-sub">Vlag &amp; Rijschema · 3e klasse · Najaar 2025-2026</div>
+      <div class="header-sub">Vlag &amp; Rijschema · 3e klasse · 2025-2026</div>
     </div>
     <div class="badge-seizoen">2025 — 2026</div>
   </div>
   <div class="tabs-bar">
     <div class="tabs-inner">
       <button class="tab-btn active" onclick="showTab('overzicht',this)">Overzicht</button>
-      <button class="tab-btn" onclick="showTab('vlag',this)">Vlagschema</button>
+      <button class="tab-btn" onclick="showTab('vlag',this)">Vlag</button>
       <button class="tab-btn" onclick="showTab('rij',this)">Rijschema</button>
+      <button class="tab-btn" onclick="showTab('kantine',this)">Kantine</button>
       <button class="tab-btn" onclick="showTab('spelers',this)">Spelers</button>
     </div>
   </div>
 </header>
 <main>
-  <div id="overzicht" class="section active"></div>
-  <div id="vlag" class="section"></div>
-  <div id="rij" class="section"></div>
-  <div id="spelers" class="section"></div>
+  <div id="overzicht" class="section active"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
+  <div id="vlag" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
+  <div id="rij" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
+  <div id="kantine" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
+  <div id="spelers" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
 </main>
 <div class="toast" id="toast"></div>
 <script>
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbwOyiAUYQrew1sRx6fEtL112ppZjPoY0wYkg3ulGbVQ0pIfZG41UqpiB8JVEUgYUZtl/exec';
-const WEDSTRIJDEN=[
-  {id:1,datum:'2026-01-17',thuis:true,tegenstander:'Jonathan JO15-5',tijd:'12:30',locatie:'Driebergen',soort:'oefenwedstrijd'},
-  {id:2,datum:'2026-01-24',thuis:true,tegenstander:'SV Parkhout JO15-3',tijd:'13:15',locatie:'Driebergen',soort:'beker'},
-  {id:3,datum:'2026-01-31',thuis:true,tegenstander:'DVSA JO15-1 J/M',tijd:'12:45',locatie:'Driebergen',soort:''},
-  {id:4,datum:'2026-02-07',thuis:false,tegenstander:'Scherpenzeel JO15-1',tijd:'12:00',locatie:'Scherpenzeel',soort:''},
-  {id:5,datum:'2026-02-28',thuis:true,tegenstander:'VRC JO15-3',tijd:'11:45',locatie:'Driebergen',soort:''},
-  {id:6,datum:'2026-03-07',thuis:false,tegenstander:'Jonathan JO15-5',tijd:'11:35',locatie:'Zeist',soort:''},
-  {id:7,datum:'2026-03-14',thuis:true,tegenstander:'Hooglanderveen JO15-4',tijd:'13:00',locatie:'Driebergen',soort:''},
-  {id:8,datum:'2026-03-21',thuis:false,tegenstander:'DOSC JO15-3',tijd:'13:15',locatie:'Den Dolder',soort:''},
-  {id:9,datum:'2026-03-28',thuis:true,tegenstander:"Candia '66 JO15-2",tijd:'15:30',locatie:'Driebergen',soort:''},
-  {id:10,datum:'2026-04-11',thuis:false,tegenstander:'FZO JO15-1',tijd:'08:45',locatie:'Zeist',soort:''},
-  {id:11,datum:'2026-04-18',thuis:true,tegenstander:'Dev Doorn JO15-2',tijd:'08:30',locatie:'Driebergen',soort:''},
-  {id:12,datum:'2026-05-16',thuis:false,tegenstander:'DOVO JO15-3',tijd:'09:00',locatie:'Veenendaal',soort:''},
-];
-let state={vlag:{},rij:{},spelers:[],stands:{}};
-const today=new Date();today.setHours(0,0,0,0);
-async function api(p){
-  const url=SCRIPT_URL+'?'+new URLSearchParams(p).toString();
-  const r=await fetch(url,{redirect:'follow'});
-  const text=await r.text();
-  try{return JSON.parse(text);}catch(e){throw new Error('Geen geldig JSON');}
-}
-async function loadData(){
-  try{
-    const d=await api({action:'load'});
-    state.vlag=d.vlag||{};state.rij=d.rij||{};
-    state.spelers=d.spelers||[];state.stands=d.stands||{};
-    ['vlag','rij','stands'].forEach(k=>{
-      const o={};for(const key in state[k])o[parseInt(key)]=state[k][key];state[k]=o;
-    });
-  }catch(e){showToast('Fout bij laden — controleer de Script URL',true);}
-}
-function parseDate(s){const[y,m,d]=s.split('-').map(Number);const dt=new Date(y,m-1,d);dt.setHours(0,0,0,0);return dt;}
-function fmtShort(s){return parseDate(s).toLocaleDateString('nl-NL',{day:'numeric',month:'short'});}
-function isPast(s){return parseDate(s)<today;}
-function showToast(msg,isError=false){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.className='toast'+(isError?' error':'')+' show';
-  setTimeout(()=>el.className='toast',2500);
-}
-function setBusy(id,busy){const b=document.getElementById(id);if(b){b.disabled=busy;b.textContent=busy?'Bezig...':'Opslaan';}}
-function renderOverzicht(){
-  const upcoming=WEDSTRIJDEN.filter(w=>!isPast(w.datum));
-  const next=upcoming[0];
-  const played=WEDSTRIJDEN.filter(w=>isPast(w.datum));
-  const wins=played.filter(w=>{const st=state.stands[w.id];if(!st||st==='-'||st==='')return false;const[a,b]=st.split('-').map(Number);return w.thuis?a>b:b>a;}).length;
-  let nb='';
-  if(next){const d=parseDate(next.datum);nb=`<div class="next-banner"><div><div class="next-label">Volgende wedstrijd</div><div class="next-name">${next.tegenstander}</div><div class="next-meta">${next.thuis?'Thuis':'Uit'} · ${next.tijd} · ${next.locatie}</div></div><div class="next-right"><div class="next-dag">${d.getDate()}</div><div class="next-maand">${d.toLocaleDateString('nl-NL',{month:'short'})}</div></div></div>`;}
-  const sg=`<div class="stat-grid"><div class="stat-card"><div class="stat-label">Wedstrijden</div><div class="stat-value">${WEDSTRIJDEN.length}</div><div class="stat-sub">${played.length} gespeeld</div></div><div class="stat-card"><div class="stat-label">Gewonnen</div><div class="stat-value">${wins}</div><div class="stat-sub">van ${played.length}</div></div><div class="stat-card"><div class="stat-label">Spelers</div><div class="stat-value">${state.spelers.length}</div><div class="stat-sub">in selectie</div></div></div>`;
-  const rows=WEDSTRIJDEN.map(w=>{
-    const past=isPast(w.datum);
-    const sb=w.soort==='beker'?'<span class="badge b-beker" style="margin-left:5px;">Beker</span>':w.soort==='oefenwedstrijd'?'<span class="badge b-oef" style="margin-left:5px;">Oef</span>':'';
-    const st=state.stands[w.id]||'';
-    const sc=st&&st!==''&&st!=='-'?`<b style="font-family:'Barlow Condensed',sans-serif;">${st}</b>`:'<span style="color:var(--text-muted);">—</span>';
-    const standEdit=`<button class="btn btn-sm" onclick="prefillStand(${w.id})" style="margin-left:6px;">Wijzig</button>`;
-    return`<tr class="${past?'past':''}"><td style="white-space:nowrap;">${fmtShort(w.datum)}</td><td>${w.tegenstander}${sb}</td><td><span class="badge ${w.thuis?'b-thuis':'b-uit'}">${w.thuis?'Thuis':'Uit'}</span></td><td>${w.tijd}</td><td>${w.locatie}</td><td>${sc} ${standEdit}</td></tr>`;
-  }).join('');
-  const optsGespeeld=WEDSTRIJDEN.filter(w=>isPast(w.datum)).map(w=>`<option value="${w.id}">${fmtShort(w.datum)} — ${w.tegenstander}</option>`).join('');
-  document.getElementById('overzicht').innerHTML=nb+sg+`<div class="card"><div class="card-header"><span class="card-title">Alle wedstrijden</span></div><table><thead><tr><th>Datum</th><th>Tegenstander</th><th></th><th>Tijd</th><th>Locatie</th><th>Stand</th></tr></thead><tbody>${rows}</tbody></table><div class="edit-panel"><div class="edit-label">Eindstand invullen</div><div class="edit-row"><select id="stand-wed" style="flex:2;min-width:180px;">${optsGespeeld}</select><input type="text" id="stand-score" placeholder="bijv. 3-1" style="flex:1;min-width:100px;"/><button id="btn-stand" class="btn btn-green" onclick="updateStand()">Opslaan</button></div></div></div>`;"
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOyiAUYQrew1sRx6fEtL112ppZjPoY0wYkg3ulGbVQ0pIfZG41UqpiB8JVEUgYUZtl/exec';
 
+const WEDSTRIJDEN = [
+  {id:1,  datum:'2026-01-17', thuis:true,  tegenstander:'Jonathan JO15-5',       tijd:'12:30', locatie:'Driebergen',   soort:'oefenwedstrijd'},
+  {id:2,  datum:'2026-01-24', thuis:true,  tegenstander:'SV Parkhout JO15-3',    tijd:'13:15', locatie:'Driebergen',   soort:'beker'},
+  {id:3,  datum:'2026-01-31', thuis:true,  tegenstander:'DVSA JO15-1 J/M',       tijd:'12:45', locatie:'Driebergen',   soort:''},
+  {id:4,  datum:'2026-02-07', thuis:false, tegenstander:'Scherpenzeel JO15-1',   tijd:'12:00', locatie:'Scherpenzeel', soort:''},
+  {id:5,  datum:'2026-02-28', thuis:true,  tegenstander:'VRC JO15-3',            tijd:'11:45', locatie:'Driebergen',   soort:''},
+  {id:6,  datum:'2026-03-07', thuis:false, tegenstander:'Jonathan JO15-5',       tijd:'11:35', locatie:'Zeist',        soort:''},
+  {id:7,  datum:'2026-03-14', thuis:true,  tegenstander:'Hooglanderveen JO15-4', tijd:'13:00', locatie:'Driebergen',   soort:''},
+  {id:8,  datum:'2026-03-21', thuis:false, tegenstander:'DOSC JO15-3',           tijd:'13:15', locatie:'Den Dolder',   soort:''},
+  {id:9,  datum:'2026-03-28', thuis:true,  tegenstander:"Candia '66 JO15-2",     tijd:'15:30', locatie:'Driebergen',   soort:''},
+  {id:10, datum:'2026-04-11', thuis:false, tegenstander:'FZO JO15-1',            tijd:'08:45', locatie:'Zeist',        soort:''},
+  {id:11, datum:'2026-04-18', thuis:true,  tegenstander:'Dev Doorn JO15-2',      tijd:'08:30', locatie:'Driebergen',   soort:''},
+  {id:12, datum:'2026-05-16', thuis:false, tegenstander:'DOVO JO15-3',           tijd:'09:00', locatie:'Veenendaal',   soort:''},
+];
+
+// Thuiswedstrijden met kantinedienst (id 11 = ook kantinedag)
+const KANTINE_WEDSTRIJDEN = WEDSTRIJDEN.filter(w => w.thuis);
+
+let state = { vlag:{}, rij:{}, spelers:[], stands:{}, kantine:{} };
+const today = new Date(); today.setHours(0,0,0,0);
+
+// ── API ──────────────────────────────────────────────────────
+async function api(params) {
+  const url = SCRIPT_URL + '?' + new URLSearchParams(params).toString();
+  const r = await fetch(url, { redirect: 'follow' });
+  const text = await r.text();
+  return JSON.parse(text);
 }
-function renderVlag(){
-  const rows=WEDSTRIJDEN.map(w=>{
-    const past=isPast(w.datum);const v=state.vlag[w.id]||'';const ntb=!v||v==='ntb';
-    const badge=ntb?'<span class="badge b-ntb">Nog te bepalen</span>':`<span class="badge b-ok">${v}</span>`;
-    return`<tr class="${past?'past':''}"><td style="white-space:nowrap;">${fmtShort(w.datum)}</td><td>${w.tegenstander} <span class="badge ${w.thuis?'b-thuis':'b-uit'}" style="font-size:11px;">${w.thuis?'T':'U'}</span></td><td>${badge}</td><td>${!past?`<button class="btn btn-sm" onclick="prefillVlag(${w.id})">Wijzig</button>`:'<span style="color:var(--text-muted);font-size:12px;">gespeeld</span>'}</td></tr>`;
-  }).join('');
-  const opts=WEDSTRIJDEN.filter(w=>!isPast(w.datum)).map(w=>`<option value="${w.id}">${fmtShort(w.datum)} — ${w.tegenstander}</option>`).join('');
-  document.getElementById('vlag').innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Vlagschema</span></div><table><thead><tr><th>Datum</th><th>Tegenstander</th><th>Vlagouder</th><th></th></tr></thead><tbody>${rows}</tbody></table><div class="edit-panel"><div class="edit-label">Vlagouder aanpassen</div><div class="edit-row"><select id="vlag-wed" style="flex:2;min-width:180px;">${opts}</select><input type="text" id="vlag-naam" placeholder="Naam ouder" style="flex:1;min-width:130px;"/><button id="btn-vlag" class="btn btn-green" onclick="updateVlag()">Opslaan</button></div></div></div>`;
+
+async function loadData() {
+  try {
+    const d = await api({ action: 'load' });
+    state.vlag    = d.vlag    || {};
+    state.rij     = d.rij     || {};
+    state.spelers = d.spelers || [];
+    state.stands  = d.stands  || {};
+    state.kantine = d.kantine || {};
+    ['vlag','rij','stands','kantine'].forEach(k => {
+      const o = {};
+      for (const key in state[k]) o[parseInt(key)] = state[k][key];
+      state[k] = o;
+    });
+  } catch(e) {
+    showToast('Fout bij laden — controleer de Script URL', true);
+  }
 }
-function renderRij(){
-  const rows=WEDSTRIJDEN.map(w=>{
-    const past=isPast(w.datum);const rijders=state.rij[w.id]||[];
-    const display=rijders.length?rijders.map(r=>`<span class="badge b-ok" style="margin:2px;">${r}</span>`).join(' '):'<span class="badge b-ntb">Nog te bepalen</span>';
-    return`<tr class="${past?'past':''}"><td style="white-space:nowrap;">${fmtShort(w.datum)}</td><td>${w.tegenstander} <span class="badge ${w.thuis?'b-thuis':'b-uit'}" style="font-size:11px;">${w.thuis?'T':'U'}</span></td><td>${display}</td><td>${!past?`<button class="btn btn-sm" onclick="prefillRij(${w.id})">Wijzig</button>`:'<span style="color:var(--text-muted);font-size:12px;">gespeeld</span>'}</td></tr>`;
-  }).join('');
-  const opts=WEDSTRIJDEN.filter(w=>!isPast(w.datum)).map(w=>`<option value="${w.id}">${fmtShort(w.datum)} — ${w.tegenstander}</option>`).join('');
-  document.getElementById('rij').innerHTML=`<div class="card"><div class="card-header"><span class="card-title">Rijschema</span></div><table><thead><tr><th>Datum</th><th>Tegenstander</th><th>Rijders</th><th></th></tr></thead><tbody>${rows}</tbody></table><div class="edit-panel"><div class="edit-label">Rijders aanpassen</div><div class="edit-row"><select id="rij-wed" style="flex:2;min-width:180px;">${opts}</select><input type="text" id="rij-namen" placeholder="Namen (komma gescheiden)" style="flex:2;min-width:160px;"/><button id="btn-rij" class="btn btn-green" onclick="updateRij()">Opslaan</button></div></div></div>`;
+
+// ── HELPERS ──────────────────────────────────────────────────
+function parseDate(s) {
+  const [y,m,d] = s.split('-').map(Number);
+  const dt = new Date(y, m-1, d); dt.setHours(0,0,0,0); return dt;
 }
-function renderSpelers(){
-  const cards=state.spelers.map((s,i)=>{
-    const init=s.naam.substring(0,2).toUpperCase();
-    return`<div class="speler-card"><div class="avatar">${init}</div><div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:500;">${s.naam}</div>${s.ouder?`<div style="font-size:12px;color:var(--text-muted);">${s.ouder}</div>`:''}</div><button class="btn btn-sm btn-del" onclick="removeSpeler('${s.naam.replace(/'/g,"\\'")}')">✕</button></div>`;
-  }).join('');
-  document.getElementById('spelers').innerHTML=`<div class="card" style="margin-bottom:16px;"><div class="card-header"><span class="card-title">Speler toevoegen</span></div><div class="edit-panel"><div class="edit-row"><input type="text" id="new-speler" placeholder="Naam speler" style="flex:1;"/><input type="text" id="new-ouder" placeholder="Naam ouder (optioneel)" style="flex:1;"/><button id="btn-add-speler" class="btn btn-green" onclick="addSpeler()">Toevoegen</button></div></div></div><div class="card"><div class="card-header"><span class="card-title">Spelerslijst</span><span style="font-size:13px;color:var(--text-muted);">${state.spelers.length} spelers</span></div><div class="speler-grid">${cards}</div></div>`;
+function fmtShort(s) {
+  return parseDate(s).toLocaleDateString('nl-NL', {day:'numeric', month:'short'});
 }
-function prefillVlag(id){const s=document.getElementById('vlag-wed');const i=document.getElementById('vlag-naam');if(s)s.value=id;if(i){const v=state.vlag[id]||'';i.value=v==='ntb'?'':v;i.focus();}}
-function prefillRij(id){const s=document.getElementById('rij-wed');const i=document.getElementById('rij-namen');if(s)s.value=id;if(i){i.value=(state.rij[id]||[]).join(', ');i.focus();}}
-async function updateVlag(){
-  const id=parseInt(document.getElementById('vlag-wed').value);
-  const naam=document.getElementById('vlag-naam').value.trim();
-  if(!naam)return;setBusy('btn-vlag',true);
-  try{await api({action:'saveVlag',id,naam});state.vlag[id]=naam;renderVlag();renderOverzicht();showToast('Vlagouder opgeslagen ✓');}
-  catch(e){showToast('Opslaan mislukt',true);}
-  setBusy('btn-vlag',false);
+function isPast(s) { return parseDate(s) < today; }
+
+function showToast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast' + (isError ? ' error' : '') + ' show';
+  setTimeout(function() { el.className = 'toast'; }, 2500);
 }
-async function updateRij(){
-  const id=parseInt(document.getElementById('rij-wed').value);
-  const namen=document.getElementById('rij-namen').value.split(',').map(n=>n.trim()).filter(Boolean);
-  setBusy('btn-rij',true);
-  try{await api({action:'saveRij',id,namen:namen.join(',')});state.rij[id]=namen;renderRij();showToast('Rijders opgeslagen ✓');}
-  catch(e){showToast('Opslaan mislukt',true);}
-  setBusy('btn-rij',false);
+
+function setBusy(id, busy) {
+  const b = document.getElementById(id);
+  if (b) { b.disabled = busy; b.textContent = busy ? 'Bezig...' : 'Opslaan'; }
 }
-async function addSpeler(){
-  const naam=document.getElementById('new-speler').value.trim();
-  const ouder=document.getElementById('new-ouder').value.trim();
-  if(!naam)return;setBusy('btn-add-speler',true);
-  try{await api({action:'addSpeler',naam,ouder});state.spelers.push({naam,ouder});renderSpelers();renderOverzicht();showToast(naam+' toegevoegd ✓');}
-  catch(e){showToast('Opslaan mislukt',true);}
-  setBusy('btn-add-speler',false);
-}
-async function removeSpeler(naam){
-  if(!confirm(naam+' verwijderen?'))return;
-  try{await api({action:'removeSpeler',naam});state.spelers=state.spelers.filter(s=>s.naam!==naam);renderSpelers();renderOverzicht();showToast(naam+' verwijderd');}
-  catch(e){showToast('Verwijderen mislukt',true);}
-}
-function prefillStand(id){
-  const s=document.getElementById('stand-wed');const i=document.getElementById('stand-score');
-  if(s)s.value=id;if(i){const v=state.stands[id]||'';i.value=v==='-'?'':v;i.focus();}
-}
-async function updateStand(){
-  const id=parseInt(document.getElementById('stand-wed').value);
-  const stand=document.getElementById('stand-score').value.trim();
-  if(!stand)return;setBusy('btn-stand',true);
-  try{await api({action:'saveStand',id,stand});state.stands[id]=stand;renderOverzicht();showToast('Eindstand opgeslagen ✓');}
-  catch(e){showToast('Opslaan mislukt',true);}
-  setBusy('btn-stand',false);
-}
-function showTab(name,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(name).classList.add('active');btn.classList.add('active');
-}
-(async()=>{
-  ['overzicht','vlag','rij','spelers'].forEach(id=>{
-    document.getElementById(id).innerHTML='<div class="loading"><span class="spinner"></span>Schema laden...</div>';
+
+// ── RENDER OVERZICHT ─────────────────────────────────────────
+function renderOverzicht() {
+  const upcoming = WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); });
+  const next = upcoming[0];
+  const played = WEDSTRIJDEN.filter(function(w) { return isPast(w.datum); });
+  const wins = played.filter(function(w) {
+    const st = state.stands[w.id];
+    if (!st || st === '-' || st === '') return false;
+    const parts = st.split('-').map(Number);
+    return w.thuis ? parts[0] > parts[1] : parts[1] > parts[0];
+  }).length;
+
+  let nb = '';
+  if (next) {
+    const d = parseDate(next.datum);
+    nb = '<div class="next-banner"><div>'
+      + '<div class="next-label">Volgende wedstrijd</div>'
+      + '<div class="next-name">' + next.tegenstander + '</div>'
+      + '<div class="next-meta">' + (next.thuis ? 'Thuis' : 'Uit') + ' &middot; ' + next.tijd + ' &middot; ' + next.locatie + '</div>'
+      + '</div><div class="next-right">'
+      + '<div class="next-dag">' + d.getDate() + '</div>'
+      + '<div class="next-maand">' + d.toLocaleDateString('nl-NL', {month:'short'}) + '</div>'
+      + '</div></div>';
+  }
+
+  const sg = '<div class="stat-grid">'
+    + '<div class="stat-card"><div class="stat-label">Wedstrijden</div><div class="stat-value">' + WEDSTRIJDEN.length + '</div><div class="stat-sub">' + played.length + ' gespeeld</div></div>'
+    + '<div class="stat-card"><div class="stat-label">Gewonnen</div><div class="stat-value">' + wins + '</div><div class="stat-sub">van ' + played.length + '</div></div>'
+    + '<div class="stat-card"><div class="stat-label">Spelers</div><div class="stat-value">' + state.spelers.length + '</div><div class="stat-sub">in selectie</div></div>'
+    + '</div>';
+
+  let rows = '';
+  WEDSTRIJDEN.forEach(function(w) {
+    const past = isPast(w.datum);
+    const sb = w.soort === 'beker' ? '<span class="badge b-beker" style="margin-left:5px;">Beker</span>'
+             : w.soort === 'oefenwedstrijd' ? '<span class="badge b-oef" style="margin-left:5px;">Oef</span>' : '';
+    const st = state.stands[w.id] || '';
+    const sc = (st && st !== '' && st !== '-')
+      ? '<b style="font-family:\'Barlow Condensed\',sans-serif;">' + st + '</b>'
+      : '<span style="color:var(--text-muted);">—</span>';
+    rows += '<tr class="' + (past ? 'past' : '') + '">'
+      + '<td style="white-space:nowrap;">' + fmtShort(w.datum) + '</td>'
+      + '<td>' + w.tegenstander + sb + '</td>'
+      + '<td><span class="badge ' + (w.thuis ? 'b-thuis' : 'b-uit') + '">' + (w.thuis ? 'Thuis' : 'Uit') + '</span></td>'
+      + '<td>' + w.tijd + '</td>'
+      + '<td>' + w.locatie + '</td>'
+      + '<td>' + sc + ' <button class="btn btn-sm" onclick="prefillStand(' + w.id + ')">Wijzig</button></td>'
+      + '</tr>';
   });
-  document.getElementById('overzicht').classList.add('active');
-  await loadData();
-  renderOverzicht();renderVlag();renderRij();renderSpelers();
-})();
+
+  let optsGespeeld = '<option value="">— kies wedstrijd —</option>';
+  WEDSTRIJDEN.forEach(function(w) {
+    optsGespeeld += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
+  });
+
+  document.getElementById('overzicht').innerHTML = nb + sg
+    + '<div class="card">'
+    + '<div class="card-header"><span class="card-title">Alle wedstrijden</span></div>'
+    + '<table><thead><tr><th>Datum</th><th>Tegenstander</th><th></th><th>Tijd</th><th>Locatie</th><th>Stand</th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table>'
+    + '<div class="edit-panel"><div class="edit-label">Eindstand invullen</div>'
+    + '<div class="edit-row">'
+    + '<select id="stand-wed" style="flex:2;min-width:180px;">' + optsGespeeld + '</select>'
+    + '<input type="text" id="stand-score" placeholder="bijv. 3-1" style="flex:1;min-width:100px;" />'
+    + '<button id="btn-stand" class="btn btn-green" onclick="updateStand()">Opslaan</button>'
+    + '</div></div></div>';
+}
+
+// ── RENDER VLAG ──────────────────────────────────────────────
+function renderVlag() {
+  let rows = '';
+  WEDSTRIJDEN.forEach(function(w) {
+    const past = isPast(w.datum);
+    const v = state.vlag[w.id] || '';
+    const ntb = !v || v === 'ntb';
+    const badge = ntb ? '<span class="badge b-ntb">Nog te bepalen</span>' : '<span class="badge b-ok">' + v + '</span>';
+    const btn = !past ? '<button class="btn btn-sm" onclick="prefillVlag(' + w.id + ')">Wijzig</button>' : '<span style="color:var(--text-muted);font-size:12px;">gespeeld</span>';
+    rows += '<tr class="' + (past ? 'past' : '') + '">'
+      + '<td style="white-space:nowrap;">' + fmtShort(w.datum) + '</td>'
+      + '<td>' + w.tegenstander + ' <span class="badge ' + (w.thuis ? 'b-thuis' : 'b-uit') + '" style="font-size:11px;">' + (w.thuis ? 'T' : 'U') + '</span></td>'
+      + '<td>' + badge + '</td>'
+      + '<td>' + btn + '</td></tr>';
+  });
+
+  let opts = '';
+  WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); }).forEach(function(w) {
+    opts += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
+  });
+
+  document.getElementById('vlag').innerHTML = '<div class="card">'
+    + '<div class="card-header"><span class="card-title">Vlagschema</span></div>'
+    + '<table><thead><tr><th>Datum</th><th>Tegenstander</th><th>Vlagouder</th><th></th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table>'
+    + '<div class="edit-panel"><div class="edit-label">Vlagouder aanpassen</div>'
+    + '<div class="edit-row">'
+    + '<select id="vlag-wed" style="flex:2;min-width:180px;">' + opts + '</select>'
+    + '<input type="text" id="vlag-naam" placeholder="Naam ouder" style="flex:1;min-width:130px;" />'
+    + '<button id="btn-vlag" class="btn btn-green" onclick="updateVlag()">Opslaan</button>'
+    + '</div></div></div>';
+}
+
+// ── RENDER RIJ ───────────────────────────────────────────────
+function renderRij() {
+  let rows = '';
+  WEDSTRIJDEN.forEach(function(w) {
+    const past = isPast(w.datum);
+    const rijders = state.rij[w.id] || [];
+    const display = rijders.length
+      ? rijders.map(function(r) { return '<span class="badge b-ok" style="margin:2px;">' + r + '</span>'; }).join(' ')
+      : '<span class="badge b-ntb">Nog te bepalen</span>';
+    const btn = !past ? '<button class="btn btn-sm" onclick="prefillRij(' + w.id + ')">Wijzig</button>' : '<span style="color:var(--text-muted);font-size:12px;">gespeeld</span>';
+    rows += '<tr class="' + (past ? 'past' : '') + '">'
+      + '<td style="white-space:nowrap;">' + fmtShort(w.datum) + '</td>'
+      + '<td>' + w.tegenstander + ' <span class="badge ' + (w.thuis ? 'b-thuis' : 'b-uit') + '" style="font-size:11px;">' + (w.thuis ? 'T' : 'U') + '</span></td>'
+      + '<td>' + display + '</td>'
+      + '<td>' + btn + '</td></tr>';
+  });
+
+  let opts = '';
+  WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); }).forEach(function(w) {
+    opts += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
+  });
+
+  document.getElementById('rij').innerHTML = '<div class="card">'
+    + '<div class="card-header"><span class="card-title">Rijschema</span></div>'
+    + '<table><thead><tr><th>Datum</th><th>Tegenstander</th><th>Rijders</th><th></th></tr></thead>'
+    + '<tbody>' + rows + '</tbody></table>'
+    + '<div class="edit-panel"><div class="edit-label">Rijders aanpassen</div>'
+    + '<div class="edit-row">'
+    + '<select id="rij-wed" style="flex:2;min-width:180px;">' + opts + '</select>'
+    + '<input type="text" id="rij-namen" placeholder="Namen (komma gescheiden)" style="flex:2;min-width:160px;" />'
+    + '<button id="btn-rij" class="btn btn-green" onclick="updateRij()">Opslaan</button>'
+    + '</div></div></div>';
+}
+
+// ── RENDER KANTINE ───────────────────────────────────────────
+function renderKantine() {
+  let cards = '';
+  KANTINE_WEDSTRIJDEN.forEach(function(w) {
+    const past = isPast(w.datum);
+    const k = state.kantine[w.id] || {};
+    const bardienst = k.bardienst || '';
+    const keuken = k.keuken || '';
+
+    cards += '<div class="kantine-card' + (past ? '" style="opacity:.6"' : '"') + '>'
+      + '<div class="kantine-datum">' + fmtShort(w.datum) + '</div>'
+      + '<div class="kantine-tegenstander">' + w.tegenstander + '</div>'
+      + '<div class="kantine-row"><span class="kantine-rol">Bardienst:</span>'
+      + (bardienst ? '<span class="badge b-ok">' + bardienst + '</span>' : '<span class="badge b-ntb">ntb</span>')
+      + '</div>'
+      + '<div class="kantine-row"><span class="kantine-rol">Keuken:</span>'
+      + (keuken ? '<span class="badge b-ok">' + keuken + '</span>' : '<span class="badge b-ntb">ntb</span>')
+      + '</div>'
+      + (!past ? '<button class="btn btn-sm" style="margin-top:8px;" onclick="prefillKantine(' + w.id + ')">Wijzig</button>' : '')
+      + '</div>';
+  });
+
+  let opts = '';
+  KANTINE_WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); }).forEach(function(w) {
+    opts += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
+  });
+
+  document.getElementById('kantine').innerHTML = '<div class="card">'
+    + '<div class="card-header"><span class="card-title">Kantinedienst</span><span style="font-size:12px;color:var(--text-muted);">alleen thuiswedstrijden</span></div>'
+    + '<div class="kantine-grid">' + cards + '</div>'
+    + '<div class="edit-panel"><div class="edit-label">Kantinedienst aanpassen</div>'
+    + '<div class="edit-row" style="flex-wrap:wrap;gap:8px;">'
+    + '<select id="kantine-wed" style="flex:2;min-width:180px;">' + opts + '</select>'
+    + '<input type="text" id="kantine-bardienst" placeholder="Bardienst (namen)" style="flex:1;min-width:140px;" />'
+    + '<input type="text" id="kantine-keuken" placeholder="Keuken (namen)" style="flex:1;min-width:140px;" />'
+    + '<button id="btn-kantine" class="btn btn-green" onclick="updateKantine()">Opslaan</button>'
+    + '</div></div></div>';
+}
+
+// ── RENDER SPELERS ───────────────────────────────────────────
+function renderSpelers() {
+  let cards = '';
+  state.spelers.forEach(function(s) {
+    const init = s.naam.substring(0, 2).toUpperCase();
+    cards += '<div class="speler-card">'
+      + '<div class="avatar">' + init + '</div>'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="font-size:14px;font-weight:500;">' + s.naam + '</div>'
+      + (s.ouder ? '<div style="font-size:12px;color:var(--text-muted);">' + s.ouder + '</div>' : '')
+      + '</div>'
+      + '<button class="btn btn-sm btn-del" onclick="removeSpeler(\'' + s.naam.replace(/'/g, "\\'") + '\')">&#x2715;</button>'
+      + '</div>';
+  });
+
+  document.getElementById('spelers').innerHTML = '<div class="card" style="margin-bottom:16px;">'
+    + '<div class="card-header"><span class="card-title">Speler toevoegen</span></div>'
+    + '<div class="edit-panel"><div class="edit-row">'
+    + '<input type="text" id="new-speler" placeholder="Naam speler" style="flex:1;" />'
+    + '<input type="text" id="new-ouder" placeholder="Naam ouder (optioneel)" style="flex:1;" />'
+    + '<button id="btn-add-speler" class="btn btn-green" onclick="addSpeler()">Toevoegen</button>'
+    + '</div></div></div>'
+    + '<div class="card">'
+    + '<div class="card-header"><span class="card-title">Spelerslijst</span>'
+    + '<span style="font-size:13px;color:var(--text-muted);">' + state.spelers.length + ' spelers</span></div>'
+    + '<div class="speler-grid">' + cards + '</div></div>';
+}
+
+// ── PREFILL ──────────────────────────────────────────────────
+function prefillVlag(id) {
+  const s = document.getElementById('vlag-wed');
+  const i = document.getElementById('vlag-naam');
+  if (s) s.value = id;
+  if (i) { const v = state.vlag[id] || ''; i.value = v === 'ntb' ? '' : v; i.focus(); }
+}
+function prefillRij(id) {
+  const s = document.getElementById('rij-wed');
+  const i = document.getElementById('rij-namen');
+  if (s) s.value = id;
+  if (i) { i.value = (state.rij[id] || []).join(', '); i.focus(); }
+}
+function prefillStand(id) {
+  const s = document.getElementById('stand-wed');
+  const i = document.getElementById('stand-score');
+  if (s) s.value = id;
+  if (i) { const v = state.stands[id] || ''; i.value = v === '-' ? '' : v; i.focus(); }
+}
+function prefillKantine(id) {
+  const s = document.getElementById('kantine-wed');
+  const b = document.getElementById('kantine-bardienst');
+  const k = document.getElementById('kantine-keuken');
+  if (s) s.value = id;
+  const kt = state.kantine[id] || {};
+  if (b) b.value = kt.bardienst || '';
+  if (k) { k.value = kt.keuken || ''; k.focus(); }
+}
+
+// ── UPDATES ──────────────────────────────────────────────────
+async function updateVlag() {
+  const id = parseInt(document.getElementById('vlag-wed').value);
+  const naam = document.getElementById('vlag-naam').value.trim();
+  if (!naam) return;
+  setBusy('btn-vlag', true);
+  try {
+    await api({ action:'saveVlag', id:id, naam:naam });
+    state.vlag[id] = naam;
+    renderVlag(); renderOverzicht();
+    showToast('Vlagouder opgeslagen \u2713');
+  } catch(e) { showToast('Opslaan mislukt', true); }
+  setBusy('btn-vlag', false);
+}
+
+async function updateRij() {
+  const id = parseInt(document.getElementById('rij-wed').value);
+  const namen = document.getElementById('rij-namen').value.split(',').map(function(n) { return n.trim(); }).filter(Boolean);
+  setBusy('btn-rij', true);
+  try {
+    await api({ action:'saveRij', id:id, namen:namen.join(',') });
+    state.rij[id] = namen;
+    renderRij();
+    showToast('Rijders opgeslagen \u2713');
+  } catch(e) { showToast('Opslaan mislukt', true); }
+  setBusy('btn-rij', false);
+}
+
+async function updateStand() {
+  const id = parseInt(document.getElementById('stand-wed').value);
+  const stand = document.getElementById('stand-score').value.trim();
+  if (!id || !stand) return;
+  setBusy('btn-stand', true);
+  try {
+    await api({ action:'saveStand', id:id, stand:stand });
+    state.stands[id] = stand;
+    renderOverzicht();
+    showToast('Eindstand opgeslagen \u2713');
+  } catch(e) { showToast('Opslaan mislukt', true); }
+  setBusy('btn-stand', false);
+}
+
+async function updateKantine() {
+  const id = parseInt(document.getElementById('kantine-wed').value);
+  const bardienst = document.getElementById('kantine-bardienst').value.trim();
+  const keuken = document.getElementById('kantine-keuken').value.trim();
+  if (!id) return;
+  setBusy('btn-kantine', true);
+  try {
+    await api({ action:'saveKantine', id:id, bardienst:bardienst, keuken:keuken });
+    if (!state.kantine[id]) state.kantine[id] = {};
+    state.kantine[id].bardienst = bardienst;
+    state.kantine[id].keuken = keuken;
+    renderKantine();
+    showToast('Kantinedienst opgeslagen \u2713');
+  } catch(e) { showToast('Opslaan mislukt', true); }
+  setBusy('btn-kantine', false);
+}
+
+async function addSpeler() {
+  const naam = document.getElementById('new-speler').value.trim();
+  const ouder = document.getElementById('new-ouder').value.trim();
+  if (!naam) return;
+  setBusy('btn-add-speler', true);
+  try {
+    await api({ action:'addSpeler', naam:naam, ouder:ouder });
+    state.spelers.push({ naam:naam, ouder:ouder });
+    renderSpelers(); renderOverzicht();
+    showToast(naam + ' toegevoegd \u2713');
+  } catch(e) { showToast('Opslaan mislukt', true); }
+  setBusy('btn-add-speler', false);
+}
+
+async function removeSpeler(naam) {
+  if (!confirm(naam + ' verwijderen?')) return;
+  try {
+    await api({ action:'removeSpeler', naam:naam });
+    state.spelers = state.spelers.filter(function(s) { return s.naam !== naam; });
+    renderSpelers(); renderOverzicht();
+    showToast(naam + ' verwijderd');
+  } catch(e) { showToast('Verwijderen mislukt', true); }
+}
+
+// ── TABS ─────────────────────────────────────────────────────
+function showTab(name, btn) {
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById(name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+loadData().then(function() {
+  renderOverzicht();
+  renderVlag();
+  renderRij();
+  renderKantine();
+  renderSpelers();
+});
 </script>
 </body>
 </html>
