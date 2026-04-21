@@ -580,8 +580,8 @@
     <div class="modal-body">
       <input type="hidden" id="bewerkRij">
       <div class="form-groep">
-        <label>Datum</label>
-        <input type="text" id="b-datum" readonly style="background:#f0f6fb;color:#7ba8c4">
+        <label>Datum (DD-MM-JJJJ)</label>
+        <input type="text" id="b-datum" placeholder="bijv. 17-01-2026">
       </div>
       <div class="form-rij">
         <div class="form-groep">
@@ -645,7 +645,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYLaCzFwSCvAX48u5KNcCcZVgvO4clToMumIepxRyOoVgeXhnfooM2c3b7PuY-n89Q/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxzHgGqVz7StxswXiu1ocn6GxUTgx9hTI5t0yalx7ddjOGEAFWqO5YelYU1ZBANP_io/exec';
 const PINCODE = '1969';
 const SPELERS = ['Cas','Daan','David','Fabian','Finn','Gijs','Hamza','Jan','Jesse','Joep',
                  'Jonathan','Lars','Lasse','Liam','Luuk','Max','Milan','Mohamed','Nathan',
@@ -677,6 +677,15 @@ function renderAlles() {
 
 function formatDatum(d) {
   if (!d) return '';
+  // Formaat is DD-MM-YYYY — splits handmatig om Amerikaanse interpretatie te vermijden
+  const delen = d.toString().split('-');
+  if (delen.length === 3) {
+    const dag   = parseInt(delen[0], 10);
+    const maand = parseInt(delen[1], 10) - 1;
+    const jaar  = parseInt(delen[2], 10);
+    const dt = new Date(jaar, maand, dag);
+    if (!isNaN(dt)) return dt.toLocaleDateString('nl-NL', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+  }
   const dt = new Date(d);
   if (isNaN(dt)) return d;
   return dt.toLocaleDateString('nl-NL', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
@@ -869,6 +878,7 @@ async function slaOp() {
   const update = {
     actie: 'schrijf',
     rijnummer: schema[index]._rijnummer,
+    datum:     document.getElementById('b-datum').value,
     uitthuis:  document.getElementById('b-uitthuis').value,
     tijdstip:  document.getElementById('b-tijdstip').value,
     team:      document.getElementById('b-team').value,
