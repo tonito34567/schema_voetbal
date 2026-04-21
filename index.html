@@ -3,515 +3,911 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FC Driebergen JO15-2 — Schema</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<title>FC Driebergen JO15-2</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--green:#1a5c2a;--green-mid:#2d7a40;--green-light:#e8f5ec;--green-accent:#4caf6e;--amber-light:#fff8e6;--red:#c0392b;--red-light:#fdecea;--white:#fff;--off-white:#f7f8f6;--border:#dde5df;--text:#1a2620;--text-mid:#4a6055;--text-muted:#8aa090;--radius:10px;--radius-sm:6px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Barlow',sans-serif;background:var(--off-white);color:var(--text);min-height:100vh}
-header{background:var(--green);color:white;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.header-inner{max-width:900px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
-.header-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:.5px}
-.header-sub{font-size:12px;opacity:.7;margin-top:1px}
-.badge-seizoen{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:white;font-size:12px;padding:4px 10px;border-radius:20px;font-family:'Barlow Condensed',sans-serif}
-.tabs-bar{background:var(--green);border-top:1px solid rgba(255,255,255,.1)}
-.tabs-inner{max-width:900px;margin:0 auto;padding:0 20px;display:flex;overflow-x:auto}
-.tab-btn{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:.5px;padding:10px 14px;color:rgba(255,255,255,.6);cursor:pointer;border:none;background:none;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase;white-space:nowrap}
-.tab-btn:hover{color:rgba(255,255,255,.9)}
-.tab-btn.active{color:white;border-bottom-color:var(--green-accent)}
-main{max-width:900px;margin:0 auto;padding:24px 20px}
-.section{display:none}.section.active{display:block}
-.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px}
-.card-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.card-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green)}
-table{width:100%;border-collapse:collapse}
-th{text-align:left;padding:10px 16px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);background:var(--off-white);border-bottom:1px solid var(--border)}
-td{padding:11px 16px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr.past td{color:var(--text-muted)}
-tr:not(.past):hover td{background:#f5fbf7}
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:600;font-family:'Barlow Condensed',sans-serif}
-.b-thuis{background:var(--green-light);color:var(--green)}
-.b-uit{background:var(--red-light);color:var(--red)}
-.b-beker{background:#e8f0ff;color:#2040a0}
-.b-oef{background:var(--off-white);color:var(--text-muted);border:1px solid var(--border)}
-.b-ntb{background:var(--amber-light);color:#8a5a00}
-.b-ok{background:var(--green-light);color:var(--green)}
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
-.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);font-weight:600;margin-bottom:6px}
-.stat-value{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--green)}
-.stat-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
-.edit-panel{background:var(--off-white);border-top:1px solid var(--border);padding:16px 20px}
-.edit-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:8px}
-.edit-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-select,input[type=text]{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:'Barlow',sans-serif;background:var(--white);color:var(--text);outline:none;transition:border-color .2s}
-select:focus,input[type=text]:focus{border-color:var(--green-mid)}
-.btn{padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;transition:all .15s}
-.btn-green{background:var(--green);color:white}
-.btn-green:hover{background:var(--green-mid)}
-.btn-green:disabled{opacity:.5;cursor:not-allowed}
-.btn-sm{padding:4px 10px;font-size:12px;border:1px solid var(--border);background:white;color:var(--text-mid);border-radius:var(--radius-sm);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:600}
-.btn-sm:hover{border-color:var(--green-mid);color:var(--green)}
-.btn-del{color:var(--red);border-color:transparent}
-.btn-del:hover{border-color:var(--red);background:var(--red-light)}
-.speler-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:16px 20px}
-.speler-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:center;gap:12px}
-.avatar{width:36px;height:36px;border-radius:50%;background:var(--green-light);border:2px solid var(--green-accent);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--green);flex-shrink:0}
-.next-banner{background:var(--green);color:white;border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.next-label{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:.8px;font-weight:600}
-.next-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;margin-top:2px}
-.next-meta{font-size:13px;opacity:.8;margin-top:2px}
-.next-right{text-align:right}
-.next-dag{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;line-height:1}
-.next-maand{font-size:13px;opacity:.7;text-transform:uppercase;letter-spacing:1px}
-.kantine-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:16px 20px}
-.kantine-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px}
-.kantine-datum{font-size:12px;color:var(--text-muted);margin-bottom:4px}
-.kantine-tegenstander{font-size:14px;font-weight:500;margin-bottom:8px}
-.kantine-row{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:4px}
-.kantine-rol{color:var(--text-muted);min-width:60px}
-.loading{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:14px}
-.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle}
-@keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:white;padding:10px 20px;border-radius:20px;font-size:14px;font-family:'Barlow Condensed',sans-serif;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.toast.error{background:var(--red)}
-@media(max-width:600px){.stat-grid{grid-template-columns:repeat(2,1fr)}th,td{padding:8px 10px;font-size:13px}.header-title{font-size:18px}}
+  :root {
+    --blauw: #5bb8e8;
+    --blauw-dark: #2a7ab5;
+    --blauw-diep: #1a4f7a;
+    --wit: #ffffff;
+    --grijs-licht: #f0f6fb;
+    --grijs: #d8e8f3;
+    --grijs-mid: #7ba8c4;
+    --tekst: #0d2d45;
+    --accent: #ffffff;
+    --accent-goud: #e8c84a;
+    --rood: #d63031;
+    --shadow: 0 2px 12px rgba(26,79,122,0.10);
+    --shadow-lg: 0 8px 32px rgba(26,79,122,0.18);
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--grijs-licht);
+    color: var(--tekst);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--blauw-diep) 0%, var(--blauw-dark) 60%, var(--blauw) 100%);
+    color: var(--wit);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(26,79,122,0.35);
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 20px 0;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+
+  .club-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--wit);
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    padding: 3px;
+  }
+
+  .header-titles h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1.5px;
+    line-height: 1;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .header-titles p {
+    font-size: 12px;
+    opacity: 0.80;
+    font-weight: 300;
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
+
+  .edit-btn-header {
+    margin-left: auto;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.35);
+    color: var(--wit);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+    white-space: nowrap;
+    backdrop-filter: blur(4px);
+  }
+  .edit-btn-header:hover { background: rgba(255,255,255,0.28); }
+  .edit-btn-header.actief {
+    background: var(--accent-goud);
+    color: var(--blauw-diep);
+    border-color: var(--accent-goud);
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    padding: 10px 18px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.60);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.2px;
+  }
+  .tab:hover { color: rgba(255,255,255,0.88); }
+  .tab.actief { color: var(--wit); border-bottom-color: var(--accent-goud); font-weight: 600; }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  /* SECTIE */
+  .sectie { display: none; }
+  .sectie.actief { display: block; }
+
+  /* STATUS BAR */
+  .status-bar {
+    background: var(--accent-goud);
+    color: var(--blauw-diep);
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: 700;
+    display: none;
+    align-items: center;
+    gap: 8px;
+  }
+  .status-bar.zichtbaar { display: flex; }
+
+  /* KAART */
+  .kaart {
+    background: var(--wit);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 1px solid var(--grijs);
+    transition: box-shadow 0.2s;
+  }
+  .kaart:hover { box-shadow: var(--shadow-lg); }
+
+  .kaart-header {
+    background: linear-gradient(90deg, var(--blauw-dark) 0%, var(--blauw) 100%);
+    color: var(--wit);
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .kaart-header .datum-badge {
+    background: rgba(255,255,255,0.20);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .kaart-header .thuis-uit {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .thuis-badge { background: rgba(255,255,255,0.20); }
+  .uit-badge { background: rgba(232,200,74,0.35); color: #fff; }
+
+  .kaart-body {
+    padding: 14px 16px;
+  }
+
+  .info-rij {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 6px 12px;
+    align-items: start;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--grijs);
+  }
+  .info-rij:last-child { border-bottom: none; }
+
+  .info-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--grijs-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding-top: 2px;
+  }
+
+  .info-waarde {
+    font-size: 14px;
+    color: var(--tekst);
+    font-weight: 400;
+  }
+  .info-waarde.ntb { color: #aac4d8; font-style: italic; }
+
+  .rijders-lijst {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .rijder-chip {
+    background: var(--grijs-licht);
+    border: 1px solid var(--grijs);
+    color: var(--blauw-dark);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .eindstand-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--blauw-dark), var(--blauw));
+    color: var(--wit);
+    padding: 3px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1.5px;
+  }
+
+  /* BIJZONDERE KAARTEN */
+  .kaart-bijzonder .kaart-header { background: linear-gradient(90deg, #5a6472, #7f8c8d); }
+  .kaart-toernooi .kaart-header  { background: linear-gradient(90deg, #6c3483, #9b59b6); }
+  .kaart-vrij .kaart-header      { background: linear-gradient(90deg, #636e72, #95a5a6); }
+  .kaart-kantine .kaart-header   { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+
+  /* BEWERK OVERLAY */
+  .bewerk-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13,45,69,0.55);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    backdrop-filter: blur(3px);
+  }
+  .bewerk-overlay.actief { display: flex; }
+
+  .bewerk-modal {
+    background: var(--wit);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .modal-header {
+    background: linear-gradient(90deg, var(--blauw-diep), var(--blauw-dark));
+    color: var(--wit);
+    padding: 18px 20px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-header h3 { font-size: 18px; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+  .modal-sluit { background: none; border: none; color: var(--wit); font-size: 22px; cursor: pointer; line-height: 1; opacity: 0.8; }
+  .modal-sluit:hover { opacity: 1; }
+
+  .modal-body { padding: 20px; }
+
+  .form-groep { margin-bottom: 13px; }
+  .form-groep label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--grijs-mid);
+    margin-bottom: 5px;
+  }
+  .form-groep input,
+  .form-groep select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--grijs);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--tekst);
+    background: var(--wit);
+    transition: border-color 0.2s;
+  }
+  .form-groep input:focus,
+  .form-groep select:focus {
+    outline: none;
+    border-color: var(--blauw-dark);
+    box-shadow: 0 0 0 3px rgba(91,184,232,0.15);
+  }
+
+  .form-rij { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn-opslaan {
+    width: 100%;
+    background: linear-gradient(90deg, var(--blauw-dark), var(--blauw));
+    color: var(--wit);
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    margin-top: 8px;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s;
+  }
+  .btn-opslaan:hover { opacity: 0.9; }
+  .btn-opslaan:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* PINCODE */
+  .pin-modal {
+    background: var(--wit);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .pin-body { padding: 28px 24px; text-align: center; }
+  .pin-body p { font-size: 14px; color: var(--grijs-mid); margin-bottom: 18px; }
+  .pin-input {
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    letter-spacing: 10px;
+    padding: 12px;
+    border: 2px solid var(--grijs);
+    border-radius: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    margin-bottom: 14px;
+    color: var(--blauw-diep);
+    transition: border-color 0.2s;
+  }
+  .pin-input:focus { outline: none; border-color: var(--blauw-dark); }
+  .pin-fout { color: var(--rood); font-size: 13px; margin-bottom: 10px; display: none; font-weight: 600; }
+
+  /* LAADINDICATOR */
+  .laden {
+    text-align: center;
+    padding: 48px;
+    color: var(--grijs-mid);
+    font-size: 14px;
+  }
+  .spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid var(--grijs);
+    border-top-color: var(--blauw-dark);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 14px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* SPELERS */
+  .spelers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  .speler-kaart {
+    background: var(--wit);
+    border-radius: var(--radius);
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--grijs);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .speler-kaart:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+  .speler-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--blauw-dark), var(--blauw));
+    color: var(--wit);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    margin: 0 auto 10px;
+    box-shadow: 0 2px 8px rgba(42,122,181,0.3);
+  }
+  .speler-naam { font-weight: 600; font-size: 14px; color: var(--tekst); }
+
+  /* EDIT KNOP */
+  .bewerk-kaart-btn {
+    background: none;
+    border: 1.5px solid var(--grijs);
+    color: var(--grijs-mid);
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: all 0.2s;
+    display: none;
+  }
+  .bewerk-kaart-btn:hover { border-color: var(--blauw-dark); color: var(--blauw-dark); background: var(--grijs-licht); }
+  .bewerkmode .bewerk-kaart-btn { display: inline-flex; align-items: center; gap: 5px; }
+
+  /* SECTIE TITEL */
+  .sectie-titel {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    color: var(--blauw-dark);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sectie-titel::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, var(--grijs), transparent);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--blauw-diep);
+    color: var(--wit);
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 999;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+    box-shadow: var(--shadow-lg);
+  }
+  .toast.zichtbaar { transform: translateX(-50%) translateY(0); }
+  .toast.succes { background: var(--blauw-dark); }
+  .toast.fout { background: var(--rood); }
+
+  @media (max-width: 600px) {
+    .form-rij { grid-template-columns: 1fr; }
+    .header-titles h1 { font-size: 20px; }
+    .info-rij { grid-template-columns: 100px 1fr; }
+    .edit-btn-header span { display: none; }
+  }
 </style>
 </head>
 <body>
+
 <header>
   <div class="header-inner">
-    <div>
-      <div class="header-title">FC Driebergen — JO15-2</div>
-      <div class="header-sub">Vlag &amp; Rijschema · 3e klasse · 2025-2026</div>
+    <div class="header-top">
+      <img class="club-logo" src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAD4AMsDASIAAhEBAxEB/8QAHQABAAICAwEBAAAAAAAAAAAAAAYHBQgDBAkBAv/EAFIQAAEDAwEEBAgICgcGBwEAAAECAwQABREGBxIhMRNBUWEIFCJxgZGhsiMyQlJ0krHBFRc1NlVicoKi0SQzQ1PC4fAnNGSjs9IWN3N1g5PD8f/EABsBAAIDAQEBAAAAAAAAAAAAAAAFAwQGAgEH/8QAOREAAQMCAwQIBAUEAwEAAAAAAQACAwQRBSExEkFRcRMiMjNhgbHwFKHB0SQ0YpHxFUJy4SMlUoL/2gAMAwEAAhEDEQA/ANMqUpQhKUpQhKV9SCo4SCT2Cs5atHasuqUrt2m7tJQv4q0RF7p/exivWtLtAuXOa0XcbLBUqzrTsL2hzlpD9ui29B5qkykcPQjePsqX2fwbpy07141NGZPzIsdTn8Sin7Kssoah+jT6eqqSYjTM1ePLP0VBUrbKxeD7oiO4gSBdLq78xb26FHzIAPozVpaR2Ow7eUqsmiIsRQ4h51lKV/XX5XXVkYY9ucjg1VTi8bsomFx5LSHT2gNZX8JVa9Oz3mlKwHVN9G39ZWB7asKx+DtquWErutztttSTxSkqeWB24GB7fVW8Vs2Zy1gKuVxaZHzGE7x9ZwPYakkDQGnIwHSx3ZShzLzh+wYFGxRRdpxcfD39V50mITdloYPHX35LSRjwbrOlrD+qJy3Mc0RkJGe3BJ4emsXefBtkpSV2bU7Lp/u5cYo/iST9lehDNisrLfRt2mClPZ0CT91dOfpDTkzJctbLaj8pnLZ/hxR09EcjGR5r34fEG5iUE8v9LzE1Bsd2g2cFarGuc0M+XCWHuX6o8rq7KgkqNIiPFmVHdYdTzQ4gpUPQa9Urnsziryq23F1k/MeSFj1jB+2oVqrZZMmNlu52GBeWQCAShLvA8+Chkeij4all7uS3NefGVkPexXHEeyvN2lbk6l2CaIdVh/T86zu55suLbz143V5HsqCXfwboCypVo1PIZGPJTKjhzj3qSU/ZXLsLnGbbHkV2zGKYmzrjmPstcaVbd38H7XMNJXDXbLiM/FafKFepYA9tRG77NdeWtZRL0rczgZ3mGS8nHnRkVVfTTM7TSrkdZBJ2Xj91EqVyyY8iK8pmSw6w6k4UhxBSoHsINcVQKylKUoQlKUoQs1ozS951de27RZI3TSFDeUpR3UNJHNSj1Af/AMyauOB4Nc1cdtU/Vsdh4gb6GYSnUpPWAorTn1Cu74HQh+KajUB/TQtgKJ/u8Lxj059lbx6T03p1ywQZX4MjvrdYStS3k75KiOPPhzzTOOKnigbLKCbpPLNUzVLoYXBuzxWmtv8AB10eyptUy7XmUoEbyUrbbSvuxukj11OdP7B9IMuJeg6GemEjAW+HnkH6xKfZW2kWDCif7rDjscMfBthP2V2KPjYWdiIeea9/p9Q/vJj5ZKhtO7KJcFARbNM2y0NKO8SltpoceshHH2VKYmzK4LH9MusZnuabU59u7VoUrl2KT6NsOQXrcGp73dd3M/ayg8LZpZ28GVMmSFDmAUoSfRgn21moWj9NxCCi1MuKHW8S5n0KJFZ6lV31c79XFW46Gnj7LB6+q4o0aPGQERmGmUDgEtoCR7K5aUquTfMq0AALBKUpXi9SlKUISlKUIXxSUqSUqSFJPAgjINYubpuwzN7xi0xFFXNSWwlR9IwaytK6a9zM2my4fGx4s4XUQmbO9PPnLIlxe5t3I/iBrCzNmCwSqFdwexLrP3g/dVk0q0yvqGaO+qpyYZSv1Z+2XoqYu2zO9OtKbfhW65NqGCjeSoEdhCwBVe6g2GaekMlqfs8ZaSDkqhxi3jH6zOOHpramlT/1N7spGg+Sr/0djc4nub5rRm9+D5oV94dD+F7UoD+rakBQPeQ4lR9tRaf4NbCnlKgaucbaPxUPwQtQ86gsZ9VehjzLL6Ch5pDqD8laQR7axknTWn5GS7ZoJKuJKWQk+scaPiqV/aityP8ACPg61nYmvzH8ry/2mbJdR6HifhGQ5HuFs3wjxmPkFBPLfSR5OTw4Ejv41Xtb6eERDgR9J61hsto8Vahv9GhXlBKgjI59iuXorQuoa2BkTmlmhF1Ph9TJM1wk1abZK5/BHuDjGvbhbsp6OXb1KOee8haSPYpVehGyuQX9HMIJ4sOLb9uR7DXmf4PUpUXa/YiF7qXVuNK7wptQA9eK9G9i729a7hH+Y+lf1k4/w1MOvQH9J9+qgPUxIfqb79FjdW/hOftGNpiXSTFDqUBO66oJT8Hk8Ae6pJYLZP0vFuFwu94cnspZ3glSlHd3ck43ieJ5VFNXwXrltOMFiQY7jyUBLoz5OG89XmrMv6YuNp0lfG3bkuep5hJSnCvJCCSeZPMVYl2ehjYXAXAytrnxVWEO6eWQMJILs76ZaWWKtjmrdZyX5LFxVAiNq3cIWpKAee6McVHGOJqZ6Lt17trMpi8zjMG+ksL6QqwnHHnxFYfY/NirsLsFK0CQ28pakZ4qSQMK7+WPRU3C0lRSFAqTzAPEVUrZS17og0ADwVzDoWuY2cuJcfH6KHbXH34+nY62HnWVGUkEtrKTjdV2VFpNs1TZrKxf495edZKEOKSHVkoCgMZSrII4gGpLtk/NqP8ASk+4que+zI0TZkgPrSFPW9tptOeKlKQAMD2+ip6eQshjAF7kg5KCqibJPKXEjZaCM1g9W36Rc9n9uuTbi476pW490SynyglQPI8jwOO+sPdGb/pqLbbui9uuiUkOJQXFHBwFYUkkgjBr8y2ltbLoa1pwHbkpae8bqh9oNcci3vWi6WKReHBPgyEtuJDilbqUcMp4nqyDjkavRMYwbIta7sra+CWzPe87Tr3s3O9rX3rO6smy/wAY1qQiQ+02vxYqaS4oJ4r4giupNiXK9bQbjbI12kRQFKWD0i90AAcAAe+uxrb/AM0bZ+1H98105VnVfNpFzgolqineWvpAne5BPDmO2oorNY06dXW194U013SObr19L23FZq5Wa5ae0TeVP3d2U46WShYUoFGHADgknnmoyqLe4emYupW77ICXXN0NdMsKB3iO3B+LnFSi82BywbPrww5PVMLrjawooKd3y0DHM9lRNzTykaMj6jM1KwV/7s4jh8cp4HPHlnGO2ime1wuXXu62muQy8F7Vxua4ANIs29r6ZnPxWZ13crhLtWmZAkux3ZTCi50aygFR3OOB58+ms/pvSN1td7YnSb85KZa3stKK/Kykgc1EdeajGu5Zuto0zJDSGC824ncQMJSQUJ4Ds4cKlemNGPWa8Nz13lySlCVDoy2QDkY+cahlcI6cC+zfayte+fHcp4W9LVF2yXW2c72tkM7b1DLJbbzqG4XREa8vsKjLKgFvLwrKlYHA8OVZzQ+p5cfSl2kz3FyhA3SypaslRVkBJV1jOOPfUXt1quFyXfHYEpTRi7y3G0qI6VOVcOHmPA1l7eGZOyO4IisIQ8zISp8pzleFJO8f3fRwqzUMa4bJsRdo00/lVKV72HbbcGzjrrbw8Estn1JrBK7nLuzjEcrKUFRVgkc91AIAA5VnZttudg2f3ZiTcVvuBwKZdS4rKUEoGOPEdfAGuPTTSr3s3at1vneKSo6yHFJJBThZV1EHiCKwVklSZOz3UJkyXnylTWC44VY8odtREve4i4Aa4C1vHJTgMjYDYlzmE7V/DMW8Fzac0ve71ZWLk3qJ9lL29hClrJG6op573dTanJmxb9FZYmSG92GjPRuKTkgqyeB7q/Gl9EybzYY9wbva4qHt8BoNE7uFlPPeHZnl11ldWMoe2m2iO6N5DkcIX3g9IDXRlHxB619nayta33UYhJpRZpaXbOd73vv8F1daXqRO0FZ7ixIdaeW7uOltZSd4JUFcu8Zqym1YYStR5JBJPmqibwp+3QpenHwSY80upV+6Un1jdNXNf5Bi6YmyAcFuIsjz7vCqtbCGsY1u8m3I2sruH1Be+R7tQBfmL3Wn/hT3fc2Z3d3pdxy4zENp48Vbzm+R6kmtOq2T8MGehvT9hteBvvSnJGewIQE//p7K1sqLFHAz7I3ABTYO0im2jvJP0+izuz6UqFrywSkr3OjuLBJ7ukTn2Zr0s2MO7tzuUfPx2kL+qoj/ABV5dRXlx5LUhs4W0sLT5wcivTHY3JCtStL4DxiGrH8Kvur2k61NK3kVzW9WrgdzHv8AdT6Rpcu61b1H46EhGPgejznCCnnn08qkpAIweIqJak1xGsl3ctz1vfdUhKVb6VAAgjPXWN/GdB/RUr66ajNNVTNadm4tlpophV0cDnN2rEnPXVdi77OoMiYqTbprsAqOSgJ3kg93EEeasxo3TY061JT46uWuQpKlKUndwQD3ntqP/jOg/oqV9dNPxnQf0VK+umpnw1z2bDhceSrsnw6N/SNIB8/TRSTWVhOoba1DErxbceDm9ub2cAjHMdtRmJsyYD6VTLs680nmhDW4T3ZJOK/X4zoP6KlfXTT8Z0H9FSvrpr2OKuibssFh5LyWbDZn7bzc+az2qdMM3iyRrVGeTCZjrCkYb3gAEkY5jtrh1LpNF5slvt5l9C5DSEh3o97eG7ukYz14B9FYf8Z8H9FSvrpqcwJAlwY8pKSkPNJcCTzGRnHtqB/xNOGl2VjlorUfwlUXBmdwL66blGJ+jnZl9t92dueXIqGQsdD/AFhQck5zwzXTvegXLhepVybvCo5fXvboZORy4Z3h2VOaVE2smbax8NyldQQOvdupvqdVDIWiHWLHc7Y5d1vePdFhxTZ+D3FZ5b3HNY5GzLKkJevbimkn4qWcerKiB6qsSldNrp23s7XwC5dh1M4AFuniefFRPUuimbpDt0SLL8TZgtqQgFvfyDu8c5HHh7a6+n9DyLVeY1wXe3X0skktlsjeykj5x7amlK5FXMGbF8vLeujQwF/SbOeW87tFG9J6X/Acye+qYJImYyno93d4qPPJzzr86S0omxePtKlplRpYALSmsAAZ4czngcVj7rtDhwLlJgrtshao7qmyoLTgkHGa634zoP6KlfXTVkw1rwTbtW4btFUE9BGQL9m9td+q/M7Zvuy1OWm7LiNL+QpJJSOzeBGR56yNt0T4npq4Wg3HfVNKSXOiwEbpB5Z48u2uh+M6D+ipX100/GdB/RUr66alc3EHAAj03KFr8Ma4kHjx36rhTs1kITuo1A4lI5BLJA96pA9pYu6gtd1M7jBZQ0UFvPSboPHOeHOsL+M6D+ipX100/GdB/RUr66a8dHXv1HpvXrJcNZ2Tw47tF3tX6Gav11NwbneKqW2EuJ6Le3iOGeY6sD0V3do7vi+iJqc8VJQ2PSoCsJ+M+D+ipX101z7VJnS6MiLCSnxp5tW6TxA3SrH2VyyOoEsTJRkDlouny0phmfAcyM9Voh4X80OarslvHOPBU6f31kf4Ko6rU8KWUiTtXebQQfFobLSu44Kv8VVXVWtdtVDz4q7h7dmlYPD1SvRHwf7h42nSU8kjxiC2T+8xXndW9/g0TN/SWh30kHdQy0cHlhW4as4dmJG8WlVMV6pifwcFZe11sI1alQ/tIqFH1qH3VD6nW2ZAF8gucMqjFPqUf51BadUJvTs5LPYi3ZqnjxSlKVbVJKUpQhfDyrYHT35At30Vr3BWvx5VsDp78gW76K17gpNjPYbzT/Ae2/kF3qUpSBaZKUpQhKUpQhULq786rr9Lc941i6ymrvzquv0tz3jWLraQ923kF8/n713MpSlKkUSUpShC+KyUkDnirL2xFLNqtMQADy1EDuSkD76rqEgOTWGzyW6lPrIqe7aV5l2trsQ4r1lI+6qNRnUxDn6JlTdWkmP+I+a87dvrwf2v6hWlW8A+hH1W0J+6oLUi2myTL2i6ifKt7eub4BzzAcIHsFR2s1MdqRx8StbTt2YmjgB6JW5vgpyP9mum15ILMxaSfNIJ+w1plW4Xgrr/ANllqI5omu/9XNXcL708j9EvxnuGn9Q+q2L21pxItS+1Do9RR/Oq8qyttScx7WvHJbo9YT/Kq1pxhpvTN8/VIcWFqt/l6BKUpV5LkpSlCF8PKtgdPfkC3fRWvcFa/HlWwOnvyBbvorXuCk2M9hvNP8B7b+QXepSlIFpkpSlCEpSlCFQurvzquv0tz3jWLrKau/Oq6/S3PeNYutpD3beQXz+fvXcylKUqRRJSlKELvafTv3+2o+dLZH8YqWbZF51BCaz8WNvetZ/lUZ0inf1Tah/xbZ9SgakO2A51TG7oiffXVGTOrYPApjFlQyHiQvNTV7gd1ZeHRyXOfUPS4qsXXdvx3r5PV2yXD/Ea6VZd2pWyYLNCVtx4LKz+KmPy8ic8B60n761Hra/wUHd/Zg43kfB3F0ebKUGmGFd/5FKsa/LeYW1e2dJNpt68cA+Rnzp/yqr6tPbCN7TUBf8AxSfa2qqspthn5ceaSYv+aPIeiUpSmCWJSlKEL4eVbA6e/IFu+ite4K1+PKtgdPfkC3fRWvcFJsZ7Deaf4D238gu9SlKQLTJSlKEJSlKEKhdXfnVdfpbnvGsXWU1d+dV1+lue8axdbSHu28gvn8/eu5lKUpUiiSlKUIWa0KM6wtgxn4cH2GsttkVjUqcc0w0/ausfs6Tva1to/XWfU2qu1tkURqV45zuw0/4qoP8Azg/x+qZx/kHf5D0XmhMWXJbyzjKnFHh564q+k5JJ66+VllskraTwSF52d3JPWm6L/wCk3WrdbP8AgiKB0Hd0cci5k+tpH8qY4X+YHmlWM/lTzC2+2sZXo6Av/iWz/wAtdVZVqbTvK0JCVn+1ZP8AAqqrpthfceZSTGB+I8glKUpilSUpShC+HlVyS9TQdP6WtxdIelLiNdFHSryj5A4nsHfVOVONGaMlXhxu53supiYG4haj0jwAwkdoTgAduOWOdUK9kTmtdKch8/BM8Nkma5zYRdx38PFde3a5v8W4/hCclT8OSo/BFO6jA4Hoz1Eenv7atCyXaBeYQlwHg4g8FA8FIPYR1Gvlws9tnWsW2REbMVKQEISMdHjkU45Ed1VleLJe9E3EXS2PrdiZx0oHV81xPZ3/AGGldoKzJo2HbuBTgGpoM3nbZv4j/XvJW5So5o/VsG/thlWI88Dy2FH43aUHrHtHtqR0tkjdE7ZeLFNopmTND2G4SlYbV2oI2n7YZDuHH15SwznitX8h1msLojW7F23INz6OPPPBChwQ95uxXd19XYJG00rozIBkon1kLJRE52ZVcau/Oq6/S3PeNYuspq786rr9Lc941i61sPdt5BYifvXcylKUqRRJSlKEKSbMk72toB+aHD/y1D76+balkX6epPAog8D37hNc+ylO9rFk/NZcPsx99dHbY4E3u8LPENwuP/1Zpa4/jf8A5+qbNH/X83/RebNKUrMrXpWznghfmTef/cR/001rHWzHgfrzpW+t5+LNQcedH+VMML/MjzSvGB+Ed5eq3G2hfCbOYS//AEFfw1VdWlrY7+y+CvtbjH+EVVtN8M7o8ykeL980/pCUpSmKVJX1CVLWlCElSlHCUgZJPYK5YMSTOltxIbK3n3DhKEjif5Dvq09N6ctekYBvF6faMpI4uHilrPyUDrUe3n2d9WpqmwDiToFcpKN9ScsmjU7guhozRDUNsXbUIQCgdIhhZ8lsDjvL6ie7kOvusFh1t9ht9lQW24kLQodYIyDVM611dLv7hYZ3o9vSfJaz5S+9f8uQ76tvT35At30Vr3BSSvjl2RJKczu4LRYbLBtOigGQ38V3q+LSlaFIWkKSoYIIyCOysJrW/N2CzLfBSZTuUR0HrV2+Ycz6B11i9Fa2jXjcg3Dcj3DknqQ8f1ew93q7qjaaV0fSgZK8+rhbL0LjmVhtYaFdjOG56cC0lB3zHQohSCOts8/R6uyv3pnaGGorka/oWXmUHcdQji4R8lQ6ld/LtxVgzZLEOK5KlOpaZaTvLWrkBVPSG39bavcVb4iIzSsbywjG6gfLXjmo/wAh1ZpjTP8Aioy2cZN/u3pVVs+DlDqY2c7+3cfFdi1QrjrzUi5s0qbhtkBZTyQnqbT39/nPYKkOstBMPteOWFtLD7aRmODhLgHZ2K+321MbNbYtptzUGG3uNNj0qPWo9pNdyq0mIPEgMWTRoPurUWGRmIibNzsyfHwWu0vxjxp3xvpPGN89L0md/e68545riq5NVaatmp2nX4jzbc9lRbLqeRUngULH38/OKqW62+Xa5zkKcyWnkcweRHUQesU9patk4sMiNyzlbRPpnXObToV1aUpVtUUpSlCFMNkSd7Vijj4sVZ9qR99YDbsopnamVk+TAXjHV/RxUl2NpzqSUv5sNQ9a0fyqH+EI90LWr3uJ3Le7y4/2FKyfxjzwanDQfgWDi9ed9KUrNrWpWxHgdS8s6jgHHBTDw9O+k/dWu9XP4JFwVH15cLdkbkuApX7yFJI9hVVzD3bNQ1UMUbtUrx71W+95Hjex9laRktxWD9VSQfYDVV1a+hwLts1et4OVpQ9H8xOVD3hVUU7oOqZGcHLPYmNpsUnFo+X8pWQsFnnXuemJBa3jzWs/EbHao/6zXe0jpidqGT8GCzDQcOvqHDzJ7T9nXU9vN4s+iLYm2WxhDksjIbzk5Py3D93qwK7qKstd0cQu/wBOajpaIPb00x2WD58l+2WbDoC0F1xXTTHU4J4dI8ewD5KR/rJqttS36ff53jExeEJ4NMpPkNju7T2nr9Qrp3SfLuc1cyc8p55fMnkB2AdQ7q61dU1J0Z23m7zv+y5q63pR0cY2WDd918PKr9szzUfTEKQ+tLbTcJta1HkkBAJNUEeVTjWN/XJs9r07bipwmOz4xucStRSndbHpwT3476ixCAzljBxN+SnwypbTNkeeAt4lcCjK17rLA324LXf/AFbIPvK+/sFSDWGgGH2zLsLaWH0jyo+cIXj5vYr2Hu51IdEWFFgsyWFAGU7hchY61fNHcOXrPXWdpVNXOZIBCbNbkPFOIMNa+ImcXc7M+Cou63q9zYzNluclSUx3N1XTZCs8h0h5nd/1nhVt6QssKyWhDMNaXi6Atx8celOOY7uwf5muvq/SkHUDJcIDE1KcNvpHPuUOsfZUEtN5vmiLj+DbkwpyIST0RPAjPxm1fd68GrD3Csh2YciMy3iqrGGgn25+sDkHcFblK6doucK7QkTIL6XWldnNJ7COo13KTOaWmx1T9rg4XabhUvOvc+x63ukmC7gGW50javiODePAj7+YqdsvWHX1oLTiejktDJTkdKwT1g9aT6j18arLV351XX6W57xrowZcmDLblQ3lsvtnKVpPEf5d1ad9IJWNe02cALH7rIR1xhkex42mEm489yyGptPz7BMDMtO80v8Aqn0DyFj7j3ViatrTmpbXqyCbReGGkSljBbV8V3vQeo93MdVQ3WukJVicMmPvyLeo8HMeU13K/n9le09WS7ophZ3yK8qaEBnTQG7PmOai9KUq+lisHYsyTNuUjHBLbaM+ck/dVW+EpLA07rl8KA/or7WSccd3cq6Nj8boNOSJixu9O+SD+qkAfbvVrJ4U15LezS8Pb4S5c5aGwDzO85vkepJpMXXmnfwFvf7J8GEQU8fE3+f+1pzSlKQLTpUt2PXgWLaZYrgorDYlBpzdPyXMoPo8rPoqJV9BIOQcEV0xxY4OG5cSMD2Fp3r1N2Mzt2RPta1fGSH2x5vJV9qfVUY1TBZtOsZLEhlTkUPh3cSd0qbUd7APVzI9FQzwftbC52DT+p1rBWEhmcBngoeQ5w5/rD0Vcm160iRBj3uOAos4bdI60E+SfQT/ABVoA8Mqg8dmQfP36rMFjpKMsPaiPy9+i4tQ64gQLY1b9MISklsYcCMJZB6gOtXsHearh1xx51brrinHFkqUtRyVE9ZNfmlX4KZkAs3996W1NXJUuu/QaDcEpSlTqslWJsn07vr/AA9MbG6MpipUOZ5Ff3D091V0eVbAacATp+3AAAeKtcB+wKWYpM6OINbvTjBqdssxc7+1d+lKVmlrUro3u0wbxCVEnsBxs8UnkpB7Qeo13qV61xabg5rlzQ8bLhcKoblbb7oW6ePQXS7DUQOl3fIWPmODqPf6j1VYGktUQNQR8NnoJaBlyOo8R3pPyh3+vFZt5pt9lbLzaXG1jdUlQyCOwiq01ZoqVan/AML6cU7uNnfLSFHpGu9J5kd3Pz0zbLHWDZlyfuPHmlDoZaA7cPWZvbw5KJ6u/Oq6/S3PeNYuuWbJemS3pchQU88srWQMZJ58K4q0MbS1oB3LLSODnlw3lfUkpUFJJSoHIIOCDVkaL1y3IbTatQlJ3xuJkrHkrB4Yc/nyPX21W1KjqKZk7dlympaqSmftM/bip/rfQi2N+42JBcZOVORhxKO9HaO7n2d0AAJOACSeAFSWxa0u9ptTtvQpLyNzdjqc4lg93aMcgeXDq4V+tnNqXd9UNvPhS2Yx8YeUrjvKz5IPnPH0GoInSwRuMxuBoeKsTNhqZWCAWLtRwU7uYGmtmqmAd11EUNDH94vgSPSon0Voz4YF4G7YtPIKSfLmOjPEfIR/jrcfbHdAt+JZ21jDfw73HkTwSPVk+kV5xbY9Sf8AiraJdLo2veipc6CLwA+CR5IPp4q9NKnuMdIS7V5v5e/VOo2iWuAb2Yxbz9+ih9KUpUnSUpShCuzwVNXptmo5GlZju7GunwkbePBMhI5fvJ4edKR11vvs5ubF90y7ZZ2HHI7fQrSfltEYSfRy9A7a8oYkh6JKZlRnFNPsrS42tPNKgcgjzEVvJsD2lC/WaFqGIpKbhGwzcI2cZVjyv3VDiD1ecU1pT8RCYCesM2+/fySasHws4qAOq7J339/VTLUdpfsl3et7+TuHLa8fHQeSv9dYNY6rh1Pa4mstNszrcpJkpTvx1k4/abV6sdxHnqoHW3GnVtOoUhxCilSVDBSRzBpvR1PTMse0NUhrqT4d925tOYK/NKUq4qK+HlWwOnvyBbvorXuCtfjyrYHT35At30Vr3BSbGew3mn+A9t/ILvUpSkC0yUpShCUpShCoTVoA1TdAAAPG3OA/aNYyspq786rr9Lc941i62kXdt5BfP5+9dzKUpSpFEvqUqUoJSkqUTgADJJ7KuTTUCPo/SLsmduh0J6aSRzKupA9gHee+o9st0uVrbv8APbwgcYjZ6z/eHu7PX2Vi9rerI7ynYqZKGrbACnJLyjhKlJHEk/NSM+nPdSmpf8VL0DeyO0ffv9k8pGCjhNQ8dY5NH197uapXwlNeu2bSlwm9ME3a8KUxGAPFAI8pQ7kp4DvIrS+ppti1q9rjWL1wSpabewOhgtK4brYPxiPnKPE+gdVQulNbUCaTq9kZBOsPpjBF1u0cylKUqmr6UpShCVLNlutp+hdTt3SMFPRnB0cuNvYDrf8A3DmD/M1E6V0x7mODm6hcSRtkaWuFwV6QbItfwvFI9ygyRLsk8Bat3iUHlnHUociO7uFWDrvSzN/ipvNnUhcooCsJPkyE44cfnY5H0V5w7GNpc3Ql06CQFybLJWPGWAeLZ/vEdWe0dY9dbxbLNoUZuCxLhSk3KxyvKSptWSg54lPYe1Jx66dNeaj/AJ4cpBqOKQPYKb8PUZxnQ8FhXELbcU24hSFpOFJUMEHsIr5Vuan01bdVwU3a0vsplLTlDyfiOjsV2Ecs8xyNVXcYUu3TFxJrC2H0c0q+0do7xTKmq2TjgRqEpq6J9Mc82nQrrHlWwOnvyBbvorXuCtfjyrYHT35At30Vr3BVDGew3mmWA9t/ILvUpSkC0yUpShCUpShCoXV351XX6W57xrF1lNXfnVdfpbnvGsWASQACSeAAraQ923kF8/n713MpU12f6OXdFoudzbKYCTlts83z/wBv213tEaDW4pFwvzW63zbiK5q719n7Pr7K7mutbNwkLtVjWgvAbrj6fitfqp7T38h5+S+eqdK7oafXeeCZ01GyBvT1WQ3Deff8r7tH1WmEyqx2lwJfI3X3Ef2SfmD9b7B38tG/CR2mpuLrmjrBJzDaXu3B5HJ1YP8AVg/NB59p4chxy+3/AGwdAZOldKyyqQrKJ89tWdz5zbavndqurkOOSNcqXVEzIGdBCeZ4prSwPqJPiZx/iOCUpSlicJSlKEJSlKEJSlKEJU12VbRbxoO6FcYmTbX1DxqGpXkr/WT81eOvr6+6FUruOR0bg5psVxJG2VpY8XBXoFsg2oxLlATdtNTUvMKx41CdOFIV1hSfknsUOfeKutl/Tmu7Z0bicSGxncJCXmT2g9Y9h668ptL6gvGmbs3dLLOdiSUdaT5Kx1hQ5EdxrZ/ZDtztl9fjRLs8myXxJSG3Ur3WXl8vIV8kn5p7cAmmrJoqogk7MnHikr4JqMENG3FvG8e/fFXzqvSFzsRU9u+NQup9A+L+0Or7Kt7T35At30Vr3BUI0ttCbcQmHqBIGRgSUJylQ/WSPtHDuFWBDXHcitLiKaVHKR0ZaIKd3qxjhioq+SYtayYZjfxUuGRU4c6SB2R3bwsRrONZXrX09+UvxRg726lwp31dQ4EEnsFQR0XW27N3VFyRGZmTQGG1KO82wQTjuBxy/nVhai0/br8lhNwS6QwSUbiynnjP2Vwt6XtabdJgO+MyWJJBWHn1LII5EE8RXEFQyOMAknO9vspKmkkllc5oAyIvvz4+/FR2xwzbNb3Sw2h9cWK5b+kQM74ac8kBYCuvjmmhIrsLWl8hOzHpS22kbzzhypROCTxz21J7Dp632Zx56L0zj7wAW8+4VrIHIZ7P8q5odnhRLtLujKViTLADpKsg45YHVQ+qaQ4a3AF+JFs17HRvaWO0sSbXyAN8lDrVDkwNqLTEm4vznFw1Orcc4ZJzwAHAAYHCrBrHqs8JV9TeilfjaWuiB3vJ3ePV6ayFV6iUSlp4Cys0sBhDhuJJHJUpc7PcbzrO6x7fGU6RLc3lckIG8eJPVU709paz6Wim53N9p2Q2Mqfc4Ia7kDt7+Z6sZxXNqTV9nsAdjxUtyZilFSmmcABR5lahyPrNUNtd2r26zNePaoueXSCY0BjipXD5KM8OzePaMmmoM1RGNo7DAPM+/d0l2YKaU7A6SQnyHv3ZWNr3aEZEV9uG/wDg+2NpJekuK3FKSOeT8lPtPsrTjbRtsXc0SNP6PcWzBPkPzx5K3h1pR1pT38z5qgu0/afqDXMhTL7hhWoEFuC0ryeHWs/KOe3gOGO2oLVOasa1vRU4sOO8q/T0Dnv6apN3bhuCUpSlyapSlKEJSlKEJSlKEJSlKEJSlKEJSlKEKz9me2bUekwzAnqN3tCMJDLyvhWk/qL7uw5HDAxW1OyXazbru0ZWlbuCseVIgSBhSf2kZ/iSfTWg9c0KVKgy2pcKQ7GkNK3m3WllK0HtBHEVegr3sGw8bTeBS2pw1kjukjOy7iF6y6b15armUsTMW+UeGHFfBqPcr7jj01LRxGRXm1s88IG5QQ3B1hFNxjgBImMgJeSP1k/FX1ceB89bP7NNqLUyCiVp28M3SAMb8dSslvPUQfKQfZ56mNJDUC9O7PgVAK2elOzVNuP/AEPf25LYalRK3bQbDIhKekrciOoGVMqSVE/skc/ZUS1ZtKkrjvGCpu2Q0JJXIeUAsJ7cngkf6zUEeHzvdskW5qzLidMxocHXvuGvvmrE1BqK1WNrenSB0hGUso8pxXmHV5zgVVGvNpjybe9JkzWbHa2x5bint1RHLivhz7B2441r1tI2/wBmti3o+mx+HLiSd6SsnxdKus55uejh31rtrDVuodWzhMv1ydlKTno2ycNt/spHAfbVjapqTTru+Sq7NXW9rqM+Z9+7q5tpXhAEhy3aHZwnGDcn2+P/AMbZ5dXFX1euqEuE2XcZrs2fJelSXVbzjrqypSj3k116VRnqZJzd5TGmpIqZtox90pSlQKylKUoQlKUoQlKUoQlKUoQlKUoQlKUoQlKUoQlKUoQld2zXW5WaeifaZ0iFJR8V1lZSrzcOqlK9BINwvCARYq5dP+EVeYlncj3izMXGclPwMhDnRBRz8tIB5d2M46udVtrnX+qdZPE3m5LMYHKIjPkMo/dHM95ye+lKnkqppG7LnZKtFRQROL2NAPv9lFqUpVdWkpSlCEpSlCEpSlCEpSlCEpSlCF//2Q==" alt="FC Driebergen">
+      <div class="header-titles">
+        <h1>FC Driebergen JO15-2</h1>
+        <p>Vlag &amp; Rijschema · 3e klasse · 2025–2026</p>
+      </div>
+      <button class="edit-btn-header" id="editToggleBtn" onclick="toggleBewerken()">
+        ✏️ <span>Bewerken</span>
+      </button>
     </div>
-    <div class="badge-seizoen">2025 — 2026</div>
-  </div>
-  <div class="tabs-bar">
-    <div class="tabs-inner">
-      <button class="tab-btn active" onclick="showTab('overzicht',this)">Overzicht</button>
-      <button class="tab-btn" onclick="showTab('vlag',this)">Vlag</button>
-      <button class="tab-btn" onclick="showTab('rij',this)">Rijschema</button>
-      <button class="tab-btn" onclick="showTab('kantine',this)">Kantine</button>
-      <button class="tab-btn" onclick="showTab('spelers',this)">Spelers</button>
+    <div class="tabs">
+      <button class="tab actief" onclick="toonSectie('overzicht', this)">📅 Overzicht</button>
+      <button class="tab" onclick="toonSectie('vlag', this)">🚩 Vlag</button>
+      <button class="tab" onclick="toonSectie('rijschema', this)">🚗 Rijschema</button>
+      <button class="tab" onclick="toonSectie('kantine', this)">☕ Kantine</button>
+      <button class="tab" onclick="toonSectie('spelers', this)">👕 Spelers</button>
     </div>
   </div>
 </header>
+
 <main>
-  <div id="overzicht" class="section active"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
-  <div id="vlag" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
-  <div id="rij" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
-  <div id="kantine" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
-  <div id="spelers" class="section"><div class="loading"><span class="spinner"></span>Schema laden...</div></div>
+  <div class="status-bar" id="statusBar">
+    ✏️ Bewerkingsmodus actief — klik op "Bewerken" op een wedstrijd om aan te passen
+  </div>
+
+  <div class="sectie actief" id="sectie-overzicht">
+    <div class="sectie-titel">Alle wedstrijden</div>
+    <div id="overzicht-lijst"><div class="laden"><div class="spinner"></div>Schema laden...</div></div>
+  </div>
+
+  <div class="sectie" id="sectie-vlag">
+    <div class="sectie-titel">Vlagdienst</div>
+    <div id="vlag-lijst"><div class="laden"><div class="spinner"></div>Schema laden...</div></div>
+  </div>
+
+  <div class="sectie" id="sectie-rijschema">
+    <div class="sectie-titel">Rijschema</div>
+    <div id="rijschema-lijst"><div class="laden"><div class="spinner"></div>Schema laden...</div></div>
+  </div>
+
+  <div class="sectie" id="sectie-kantine">
+    <div class="sectie-titel">Kantinedienst</div>
+    <div id="kantine-lijst"><div class="laden"><div class="spinner"></div>Schema laden...</div></div>
+  </div>
+
+  <div class="sectie" id="sectie-spelers">
+    <div class="sectie-titel">Spelers JO15-2</div>
+    <div class="spelers-grid" id="spelers-grid"></div>
+  </div>
 </main>
+
+<!-- PINCODE OVERLAY -->
+<div class="bewerk-overlay" id="pinOverlay">
+  <div class="pin-modal">
+    <div class="modal-header">
+      <h3>🔐 Bewerkingsmodus</h3>
+      <button class="modal-sluit" onclick="sluitPin()">✕</button>
+    </div>
+    <div class="pin-body">
+      <p>Voer de pincode in om wijzigingen te maken</p>
+      <input type="password" inputmode="numeric" maxlength="6" class="pin-input" id="pinInput"
+             placeholder="••••" onkeydown="if(event.key==='Enter') checkPin()">
+      <div class="pin-fout" id="pinFout">Onjuiste pincode, probeer opnieuw</div>
+      <button class="btn-opslaan" onclick="checkPin()">Ontgrendelen</button>
+    </div>
+  </div>
+</div>
+
+<!-- BEWERK MODAL -->
+<div class="bewerk-overlay" id="bewerkOverlay">
+  <div class="bewerk-modal">
+    <div class="modal-header">
+      <h3>✏️ Wedstrijd bewerken</h3>
+      <button class="modal-sluit" onclick="sluitBewerk()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="bewerkRij">
+      <div class="form-groep">
+        <label>Datum</label>
+        <input type="text" id="b-datum" readonly style="background:#f0f6fb;color:#7ba8c4">
+      </div>
+      <div class="form-rij">
+        <div class="form-groep">
+          <label>Uit / Thuis</label>
+          <select id="b-uitthuis">
+            <option value="Thuis">Thuis</option>
+            <option value="Uit">Uit</option>
+            <option value=""></option>
+          </select>
+        </div>
+        <div class="form-groep">
+          <label>Tijdstip</label>
+          <input type="time" id="b-tijdstip">
+        </div>
+      </div>
+      <div class="form-groep">
+        <label>Tegenstander</label>
+        <input type="text" id="b-team" placeholder="bijv. VRC Jo15-3">
+      </div>
+      <div class="form-groep">
+        <label>Locatie / Plaats</label>
+        <input type="text" id="b-plaats" placeholder="bijv. Driebergen">
+      </div>
+      <div class="form-groep">
+        <label>Vlagouder</label>
+        <input type="text" id="b-vlag" placeholder="Naam ouder">
+      </div>
+      <div class="form-groep">
+        <label>Rijder 1</label>
+        <input type="text" id="b-rijder1" placeholder="Naam ouder">
+      </div>
+      <div class="form-groep">
+        <label>Rijder 2</label>
+        <input type="text" id="b-rijder2" placeholder="Naam ouder of 'Fiets'">
+      </div>
+      <div class="form-groep">
+        <label>Rijder 3</label>
+        <input type="text" id="b-rijder3" placeholder="Naam ouder of 'Fiets'">
+      </div>
+      <div class="form-groep">
+        <label>Rijder 4</label>
+        <input type="text" id="b-rijder4" placeholder="Naam ouder of 'Fiets'">
+      </div>
+      <div class="form-groep">
+        <label>Eindstand</label>
+        <input type="text" id="b-eindstand" placeholder="bijv. 3-1">
+      </div>
+      <div class="form-groep">
+        <label>Kantinedienst bardienst</label>
+        <input type="text" id="b-bardienst" placeholder="Naam(en)">
+      </div>
+      <div class="form-groep">
+        <label>Kantinedienst keuken</label>
+        <input type="text" id="b-keuken" placeholder="Naam(en)">
+      </div>
+      <button class="btn-opslaan" id="opslaanBtn" onclick="slaOp()">💾 Opslaan</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
+
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOyiAUYQrew1sRx6fEtL112ppZjPoY0wYkg3ulGbVQ0pIfZG41UqpiB8JVEUgYUZtl/exec';
+const PINCODE = '1969';
+const SPELERS = ['Cas','Daan','David','Fabian','Finn','Gijs','Hamza','Jan','Jesse','Joep',
+                 'Jonathan','Lars','Lasse','Liam','Luuk','Max','Milan','Mohamed','Nathan',
+                 'Niek','Owen','Remi','Sam','Stef','Thomas','Tim','Tom','Wout'];
 
-const WEDSTRIJDEN = [
-  {id:1,  datum:'2026-01-17', thuis:true,  tegenstander:'Jonathan JO15-5',       tijd:'12:30', locatie:'Driebergen',   soort:'oefenwedstrijd'},
-  {id:2,  datum:'2026-01-24', thuis:true,  tegenstander:'SV Parkhout JO15-3',    tijd:'13:15', locatie:'Driebergen',   soort:'beker'},
-  {id:3,  datum:'2026-01-31', thuis:true,  tegenstander:'DVSA JO15-1 J/M',       tijd:'12:45', locatie:'Driebergen',   soort:''},
-  {id:4,  datum:'2026-02-07', thuis:false, tegenstander:'Scherpenzeel JO15-1',   tijd:'12:00', locatie:'Scherpenzeel', soort:''},
-  {id:5,  datum:'2026-02-28', thuis:true,  tegenstander:'VRC JO15-3',            tijd:'11:45', locatie:'Driebergen',   soort:''},
-  {id:6,  datum:'2026-03-07', thuis:false, tegenstander:'Jonathan JO15-5',       tijd:'11:35', locatie:'Zeist',        soort:''},
-  {id:7,  datum:'2026-03-14', thuis:true,  tegenstander:'Hooglanderveen JO15-4', tijd:'13:00', locatie:'Driebergen',   soort:''},
-  {id:8,  datum:'2026-03-21', thuis:false, tegenstander:'DOSC JO15-3',           tijd:'13:15', locatie:'Den Dolder',   soort:''},
-  {id:9,  datum:'2026-03-28', thuis:true,  tegenstander:"Candia '66 JO15-2",     tijd:'15:30', locatie:'Driebergen',   soort:''},
-  {id:10, datum:'2026-04-11', thuis:false, tegenstander:'FZO JO15-1',            tijd:'08:45', locatie:'Zeist',        soort:''},
-  {id:11, datum:'2026-04-18', thuis:true,  tegenstander:'Dev Doorn JO15-2',      tijd:'08:30', locatie:'Driebergen',   soort:''},
-  {id:12, datum:'2026-05-16', thuis:false, tegenstander:'DOVO JO15-3',           tijd:'09:00', locatie:'Veenendaal',   soort:''},
-];
+let bewerkenActief = false;
+let schema = [];
 
-// Kantinedienst: vaste datum 11 april 2026, los van wedstrijden
-
-let state = { vlag:{}, rij:{}, spelers:[], stands:{}, kantine:{} };
-const today = new Date(); today.setHours(0,0,0,0);
-
-// ── API ──────────────────────────────────────────────────────
-async function api(params) {
-  const url = SCRIPT_URL + '?' + new URLSearchParams(params).toString();
-  const r = await fetch(url, { redirect: 'follow' });
-  const text = await r.text();
-  return JSON.parse(text);
-}
-
-async function loadData() {
+async function laadSchema() {
   try {
-    const d = await api({ action: 'load' });
-    state.vlag    = d.vlag    || {};
-    state.rij     = d.rij     || {};
-    state.spelers = d.spelers || [];
-    state.stands  = d.stands  || {};
-    state.kantine = d.kantine || {};
-    ['vlag','rij','stands','kantine'].forEach(k => {
-      const o = {};
-      for (const key in state[k]) o[parseInt(key)] = state[k][key];
-      state[k] = o;
-    });
+    const resp = await fetch(SCRIPT_URL + '?actie=lees');
+    const data = await resp.json();
+    schema = data;
+    renderAlles();
   } catch(e) {
-    showToast('Fout bij laden — controleer de Script URL', true);
+    document.querySelectorAll('[id$="-lijst"]').forEach(el => {
+      el.innerHTML = '<div class="laden">❌ Kon schema niet laden. Controleer de verbinding.</div>';
+    });
   }
 }
 
-// ── HELPERS ──────────────────────────────────────────────────
-function parseDate(s) {
-  const [y,m,d] = s.split('-').map(Number);
-  const dt = new Date(y, m-1, d); dt.setHours(0,0,0,0); return dt;
-}
-function fmtShort(s) {
-  return parseDate(s).toLocaleDateString('nl-NL', {day:'numeric', month:'short'});
-}
-function isPast(s) { return parseDate(s) < today; }
-
-function showToast(msg, isError) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = 'toast' + (isError ? ' error' : '') + ' show';
-  setTimeout(function() { el.className = 'toast'; }, 2500);
-}
-
-function setBusy(id, busy) {
-  const b = document.getElementById(id);
-  if (b) { b.disabled = busy; b.textContent = busy ? 'Bezig...' : 'Opslaan'; }
-}
-
-// ── RENDER OVERZICHT ─────────────────────────────────────────
-function renderOverzicht() {
-  const upcoming = WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); });
-  const next = upcoming[0];
-  const played = WEDSTRIJDEN.filter(function(w) { return isPast(w.datum); });
-  const wins = played.filter(function(w) {
-    const st = state.stands[w.id];
-    if (!st || st === '-' || st === '') return false;
-    const parts = st.split('-').map(Number);
-    return w.thuis ? parts[0] > parts[1] : parts[1] > parts[0];
-  }).length;
-
-  let nb = '';
-  if (next) {
-    const d = parseDate(next.datum);
-    nb = '<div class="next-banner"><div>'
-      + '<div class="next-label">Volgende wedstrijd</div>'
-      + '<div class="next-name">' + next.tegenstander + '</div>'
-      + '<div class="next-meta">' + (next.thuis ? 'Thuis' : 'Uit') + ' &middot; ' + next.tijd + ' &middot; ' + next.locatie + '</div>'
-      + '</div><div class="next-right">'
-      + '<div class="next-dag">' + d.getDate() + '</div>'
-      + '<div class="next-maand">' + d.toLocaleDateString('nl-NL', {month:'short'}) + '</div>'
-      + '</div></div>';
-  }
-
-  const sg = '<div class="stat-grid">'
-    + '<div class="stat-card"><div class="stat-label">Wedstrijden</div><div class="stat-value">' + WEDSTRIJDEN.length + '</div><div class="stat-sub">' + played.length + ' gespeeld</div></div>'
-    + '<div class="stat-card"><div class="stat-label">Gewonnen</div><div class="stat-value">' + wins + '</div><div class="stat-sub">van ' + played.length + '</div></div>'
-    + '<div class="stat-card"><div class="stat-label">Spelers</div><div class="stat-value">' + state.spelers.length + '</div><div class="stat-sub">in selectie</div></div>'
-    + '</div>';
-
-  let rows = '';
-  WEDSTRIJDEN.forEach(function(w) {
-    const past = isPast(w.datum);
-    const sb = w.soort === 'beker' ? '<span class="badge b-beker" style="margin-left:5px;">Beker</span>'
-             : w.soort === 'oefenwedstrijd' ? '<span class="badge b-oef" style="margin-left:5px;">Oef</span>' : '';
-    const st = state.stands[w.id] || '';
-    const sc = (st && st !== '' && st !== '-')
-      ? '<b style="font-family:\'Barlow Condensed\',sans-serif;">' + st + '</b>'
-      : '<span style="color:var(--text-muted);">—</span>';
-    rows += '<tr class="' + (past ? 'past' : '') + '">'
-      + '<td style="white-space:nowrap;">' + fmtShort(w.datum) + '</td>'
-      + '<td>' + w.tegenstander + sb + '</td>'
-      + '<td><span class="badge ' + (w.thuis ? 'b-thuis' : 'b-uit') + '">' + (w.thuis ? 'Thuis' : 'Uit') + '</span></td>'
-      + '<td>' + w.tijd + '</td>'
-      + '<td>' + w.locatie + '</td>'
-      + '<td>' + sc + ' <button class="btn btn-sm" onclick="prefillStand(' + w.id + ')">Wijzig</button></td>'
-      + '</tr>';
-  });
-
-  let optsGespeeld = '<option value="">— kies wedstrijd —</option>';
-  WEDSTRIJDEN.forEach(function(w) {
-    optsGespeeld += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
-  });
-
-  document.getElementById('overzicht').innerHTML = nb + sg
-    + '<div class="card">'
-    + '<div class="card-header"><span class="card-title">Alle wedstrijden</span></div>'
-    + '<table><thead><tr><th>Datum</th><th>Tegenstander</th><th></th><th>Tijd</th><th>Locatie</th><th>Stand</th></tr></thead>'
-    + '<tbody>' + rows + '</tbody></table>'
-    + '<div class="edit-panel"><div class="edit-label">Eindstand invullen</div>'
-    + '<div class="edit-row">'
-    + '<select id="stand-wed" style="flex:2;min-width:180px;">' + optsGespeeld + '</select>'
-    + '<input type="text" id="stand-score" placeholder="bijv. 3-1" style="flex:1;min-width:100px;" />'
-    + '<button id="btn-stand" class="btn btn-green" onclick="updateStand()">Opslaan</button>'
-    + '</div></div></div>';
-}
-
-// ── RENDER VLAG ──────────────────────────────────────────────
-function renderVlag() {
-  let rows = '';
-  WEDSTRIJDEN.forEach(function(w) {
-    const past = isPast(w.datum);
-    const v = state.vlag[w.id] || '';
-    const ntb = !v || v === 'ntb';
-    const badge = ntb ? '<span class="badge b-ntb">Nog te bepalen</span>' : '<span class="badge b-ok">' + v + '</span>';
-    const btn = !past ? '<button class="btn btn-sm" onclick="prefillVlag(' + w.id + ')">Wijzig</button>' : '<span style="color:var(--text-muted);font-size:12px;">gespeeld</span>';
-    rows += '<tr class="' + (past ? 'past' : '') + '">'
-      + '<td style="white-space:nowrap;">' + fmtShort(w.datum) + '</td>'
-      + '<td>' + w.tegenstander + ' <span class="badge ' + (w.thuis ? 'b-thuis' : 'b-uit') + '" style="font-size:11px;">' + (w.thuis ? 'T' : 'U') + '</span></td>'
-      + '<td>' + badge + '</td>'
-      + '<td>' + btn + '</td></tr>';
-  });
-
-  let opts = '';
-  WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); }).forEach(function(w) {
-    opts += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
-  });
-
-  document.getElementById('vlag').innerHTML = '<div class="card">'
-    + '<div class="card-header"><span class="card-title">Vlagschema</span></div>'
-    + '<table><thead><tr><th>Datum</th><th>Tegenstander</th><th>Vlagouder</th><th></th></tr></thead>'
-    + '<tbody>' + rows + '</tbody></table>'
-    + '<div class="edit-panel"><div class="edit-label">Vlagouder aanpassen</div>'
-    + '<div class="edit-row">'
-    + '<select id="vlag-wed" style="flex:2;min-width:180px;">' + opts + '</select>'
-    + '<input type="text" id="vlag-naam" placeholder="Naam ouder" style="flex:1;min-width:130px;" />'
-    + '<button id="btn-vlag" class="btn btn-green" onclick="updateVlag()">Opslaan</button>'
-    + '</div></div></div>';
-}
-
-// ── RENDER RIJ ───────────────────────────────────────────────
-function renderRij() {
-  let rows = '';
-  WEDSTRIJDEN.forEach(function(w) {
-    const past = isPast(w.datum);
-    const rijders = state.rij[w.id] || [];
-    const display = rijders.length
-      ? rijders.map(function(r) { return '<span class="badge b-ok" style="margin:2px;">' + r + '</span>'; }).join(' ')
-      : '<span class="badge b-ntb">Nog te bepalen</span>';
-    const btn = !past ? '<button class="btn btn-sm" onclick="prefillRij(' + w.id + ')">Wijzig</button>' : '<span style="color:var(--text-muted);font-size:12px;">gespeeld</span>';
-    rows += '<tr class="' + (past ? 'past' : '') + '">'
-      + '<td style="white-space:nowrap;">' + fmtShort(w.datum) + '</td>'
-      + '<td>' + w.tegenstander + ' <span class="badge ' + (w.thuis ? 'b-thuis' : 'b-uit') + '" style="font-size:11px;">' + (w.thuis ? 'T' : 'U') + '</span></td>'
-      + '<td>' + display + '</td>'
-      + '<td>' + btn + '</td></tr>';
-  });
-
-  let opts = '';
-  WEDSTRIJDEN.filter(function(w) { return !isPast(w.datum); }).forEach(function(w) {
-    opts += '<option value="' + w.id + '">' + fmtShort(w.datum) + ' — ' + w.tegenstander + '</option>';
-  });
-
-  document.getElementById('rij').innerHTML = '<div class="card">'
-    + '<div class="card-header"><span class="card-title">Rijschema</span></div>'
-    + '<table><thead><tr><th>Datum</th><th>Tegenstander</th><th>Rijders</th><th></th></tr></thead>'
-    + '<tbody>' + rows + '</tbody></table>'
-    + '<div class="edit-panel"><div class="edit-label">Rijders aanpassen</div>'
-    + '<div class="edit-row">'
-    + '<select id="rij-wed" style="flex:2;min-width:180px;">' + opts + '</select>'
-    + '<input type="text" id="rij-namen" placeholder="Namen (komma gescheiden)" style="flex:2;min-width:160px;" />'
-    + '<button id="btn-rij" class="btn btn-green" onclick="updateRij()">Opslaan</button>'
-    + '</div></div></div>';
-}
-
-// ── RENDER KANTINE ───────────────────────────────────────────
-function renderKantine() {
-  const k = state.kantine[99] || {};
-  const bar1  = k.bar1  || '';
-  const bar2  = k.bar2  || '';
-  const keuken = k.keuken || '';
-  const past = isPast('2026-04-11');
-
-  const mkBadge = function(v) {
-    return v ? '<span class="badge b-ok">' + v + '</span>' : '<span class="badge b-ntb">Nog te bepalen</span>';
-  };
-
-  document.getElementById('kantine').innerHTML = '<div class="card">'
-    + '<div class="card-header">'
-    + '<span class="card-title">Kantinedienst</span>'
-    + '<span style="font-size:12px;color:var(--text-muted);">zaterdag 11 april 2026</span>'
-    + '</div>'
-    + '<div style="padding:20px;">'
-
-    // Bardienst blok
-    + '<div style="margin-bottom:20px;">'
-    + '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:10px;">Bardienst &mdash; 12:30 tot 16:45</div>'
-    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'
-    + '<div class="kantine-card"><div class="kantine-rol" style="margin-bottom:6px;">Persoon 1</div>' + mkBadge(bar1) + '</div>'
-    + '<div class="kantine-card"><div class="kantine-rol" style="margin-bottom:6px;">Persoon 2</div>' + mkBadge(bar2) + '</div>'
-    + '</div></div>'
-
-    // Keukendienst blok
-    + '<div style="margin-bottom:8px;">'
-    + '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:10px;">Keukendienst &mdash; 15:00 tot 18:00</div>'
-    + '<div style="max-width:300px;">'
-    + '<div class="kantine-card"><div class="kantine-rol" style="margin-bottom:6px;">Persoon 1</div>' + mkBadge(keuken) + '</div>'
-    + '</div></div>'
-    + '</div>'
-
-    // Edit panel
-    + (past ? '' :
-      '<div class="edit-panel"><div class="edit-label">Namen invullen</div>'
-      + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">'
-      + '<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Bardienst persoon 1</div>'
-      + '<input type="text" id="kantine-bar1" placeholder="Naam" value="' + bar1 + '" /></div>'
-      + '<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Bardienst persoon 2</div>'
-      + '<input type="text" id="kantine-bar2" placeholder="Naam" value="' + bar2 + '" /></div>'
-      + '<div><div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Keukendienst persoon 1</div>'
-      + '<input type="text" id="kantine-keuken" placeholder="Naam" value="' + keuken + '" /></div>'
-      + '</div>'
-      + '<button id="btn-kantine" class="btn btn-green" onclick="updateKantine()">Opslaan</button>'
-      + '</div>')
-    + '</div>';
-}
-
-// ── RENDER SPELERS ───────────────────────────────────────────
-function renderSpelers() {
-  let cards = '';
-  state.spelers.forEach(function(s) {
-    const init = s.naam.substring(0, 2).toUpperCase();
-    cards += '<div class="speler-card">'
-      + '<div class="avatar">' + init + '</div>'
-      + '<div style="flex:1;min-width:0;">'
-      + '<div style="font-size:14px;font-weight:500;">' + s.naam + '</div>'
-      + (s.ouder ? '<div style="font-size:12px;color:var(--text-muted);">' + s.ouder + '</div>' : '')
-      + '</div>'
-      + '<button class="btn btn-sm btn-del" onclick="removeSpeler(\'' + s.naam.replace(/'/g, "\\'") + '\')">&#x2715;</button>'
-      + '</div>';
-  });
-
-  document.getElementById('spelers').innerHTML = '<div class="card" style="margin-bottom:16px;">'
-    + '<div class="card-header"><span class="card-title">Speler toevoegen</span></div>'
-    + '<div class="edit-panel"><div class="edit-row">'
-    + '<input type="text" id="new-speler" placeholder="Naam speler" style="flex:1;" />'
-    + '<input type="text" id="new-ouder" placeholder="Naam ouder (optioneel)" style="flex:1;" />'
-    + '<button id="btn-add-speler" class="btn btn-green" onclick="addSpeler()">Toevoegen</button>'
-    + '</div></div></div>'
-    + '<div class="card">'
-    + '<div class="card-header"><span class="card-title">Spelerslijst</span>'
-    + '<span style="font-size:13px;color:var(--text-muted);">' + state.spelers.length + ' spelers</span></div>'
-    + '<div class="speler-grid">' + cards + '</div></div>';
-}
-
-// ── PREFILL ──────────────────────────────────────────────────
-function prefillVlag(id) {
-  const s = document.getElementById('vlag-wed');
-  const i = document.getElementById('vlag-naam');
-  if (s) s.value = id;
-  if (i) { const v = state.vlag[id] || ''; i.value = v === 'ntb' ? '' : v; i.focus(); }
-}
-function prefillRij(id) {
-  const s = document.getElementById('rij-wed');
-  const i = document.getElementById('rij-namen');
-  if (s) s.value = id;
-  if (i) { i.value = (state.rij[id] || []).join(', '); i.focus(); }
-}
-function prefillStand(id) {
-  const s = document.getElementById('stand-wed');
-  const i = document.getElementById('stand-score');
-  if (s) s.value = id;
-  if (i) { const v = state.stands[id] || ''; i.value = v === '-' ? '' : v; i.focus(); }
-}
-function prefillKantine(id) { /* niet meer gebruikt */ }
-
-// ── UPDATES ──────────────────────────────────────────────────
-async function updateVlag() {
-  const id = parseInt(document.getElementById('vlag-wed').value);
-  const naam = document.getElementById('vlag-naam').value.trim();
-  if (!naam) return;
-  setBusy('btn-vlag', true);
-  try {
-    await api({ action:'saveVlag', id:id, naam:naam });
-    state.vlag[id] = naam;
-    renderVlag(); renderOverzicht();
-    showToast('Vlagouder opgeslagen \u2713');
-  } catch(e) { showToast('Opslaan mislukt', true); }
-  setBusy('btn-vlag', false);
-}
-
-async function updateRij() {
-  const id = parseInt(document.getElementById('rij-wed').value);
-  const namen = document.getElementById('rij-namen').value.split(',').map(function(n) { return n.trim(); }).filter(Boolean);
-  setBusy('btn-rij', true);
-  try {
-    await api({ action:'saveRij', id:id, namen:namen.join(',') });
-    state.rij[id] = namen;
-    renderRij();
-    showToast('Rijders opgeslagen \u2713');
-  } catch(e) { showToast('Opslaan mislukt', true); }
-  setBusy('btn-rij', false);
-}
-
-async function updateStand() {
-  const id = parseInt(document.getElementById('stand-wed').value);
-  const stand = document.getElementById('stand-score').value.trim();
-  if (!id || !stand) return;
-  setBusy('btn-stand', true);
-  try {
-    await api({ action:'saveStand', id:id, stand:stand });
-    state.stands[id] = stand;
-    renderOverzicht();
-    showToast('Eindstand opgeslagen \u2713');
-  } catch(e) { showToast('Opslaan mislukt', true); }
-  setBusy('btn-stand', false);
-}
-
-async function updateKantine() {
-  const bar1   = (document.getElementById('kantine-bar1')   || {}).value || '';
-  const bar2   = (document.getElementById('kantine-bar2')   || {}).value || '';
-  const keuken = (document.getElementById('kantine-keuken') || {}).value || '';
-  setBusy('btn-kantine', true);
-  try {
-    await api({ action:'saveKantine', id:99, bardienst:bar1 + '|' + bar2, keuken:keuken });
-    if (!state.kantine[99]) state.kantine[99] = {};
-    state.kantine[99].bar1   = bar1.trim();
-    state.kantine[99].bar2   = bar2.trim();
-    state.kantine[99].keuken = keuken.trim();
-    renderKantine();
-    showToast('Kantinedienst opgeslagen \u2713');
-  } catch(e) { showToast('Opslaan mislukt', true); }
-  setBusy('btn-kantine', false);
-}
-
-async function addSpeler() {
-  const naam = document.getElementById('new-speler').value.trim();
-  const ouder = document.getElementById('new-ouder').value.trim();
-  if (!naam) return;
-  setBusy('btn-add-speler', true);
-  try {
-    await api({ action:'addSpeler', naam:naam, ouder:ouder });
-    state.spelers.push({ naam:naam, ouder:ouder });
-    renderSpelers(); renderOverzicht();
-    showToast(naam + ' toegevoegd \u2713');
-  } catch(e) { showToast('Opslaan mislukt', true); }
-  setBusy('btn-add-speler', false);
-}
-
-async function removeSpeler(naam) {
-  if (!confirm(naam + ' verwijderen?')) return;
-  try {
-    await api({ action:'removeSpeler', naam:naam });
-    state.spelers = state.spelers.filter(function(s) { return s.naam !== naam; });
-    renderSpelers(); renderOverzicht();
-    showToast(naam + ' verwijderd');
-  } catch(e) { showToast('Verwijderen mislukt', true); }
-}
-
-// ── TABS ─────────────────────────────────────────────────────
-function showTab(name, btn) {
-  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
-  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-  document.getElementById(name).classList.add('active');
-  btn.classList.add('active');
-}
-
-// ── INIT ─────────────────────────────────────────────────────
-loadData().then(function() {
+function renderAlles() {
   renderOverzicht();
   renderVlag();
-  renderRij();
+  renderRijschema();
   renderKantine();
   renderSpelers();
-});
+}
+
+function formatDatum(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  if (isNaN(dt)) return d;
+  return dt.toLocaleDateString('nl-NL', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+}
+
+function formatTijd(t) {
+  if (!t) return '';
+  return t.toString().substring(0,5);
+}
+
+function isLeeg(v) {
+  return !v || v.toString().trim() === '' || v === 'ntb' || v === 'NaN';
+}
+
+function buildKaart(rij, index, toonVeld) {
+  const datum    = formatDatum(rij.datum);
+  const uitThuis = rij.uitthuis || '';
+  const thuisBadge = uitThuis.toLowerCase().includes('uit') ? 'uit-badge' : 'thuis-badge';
+  const team     = isLeeg(rij.team) ? '' : rij.team;
+  const plaats   = isLeeg(rij.plaats) ? '' : rij.plaats;
+  const tijdstip = formatTijd(rij.tijdstip);
+  const vlag     = isLeeg(rij.vlag) ? '' : rij.vlag;
+  const eindstand= isLeeg(rij.eindstand) ? '' : rij.eindstand;
+
+  const rijders = [rij.rijder1, rij.rijder2, rij.rijder3, rij.rijder4]
+    .filter(r => r && r.toString().trim() !== '' && r !== 'NaN');
+
+  if (rij.bijzonder) {
+    return `<div class="kaart ${rij.klasse || 'kaart-bijzonder'}">
+      <div class="kaart-header">
+        <span>${datum}</span>
+        <span class="datum-badge">${rij.bijzonder}</span>
+      </div>
+    </div>`;
+  }
+
+  let rijen = '';
+  if (toonVeld.team) rijen += `<div class="info-rij">
+    <span class="info-label">Tegenstander</span>
+    <span class="info-waarde ${!team ? 'ntb' : ''}">${team || '— nog niet bekend —'}</span>
+  </div>`;
+  if (toonVeld.uitthuis && uitThuis) rijen += `<div class="info-rij">
+    <span class="info-label">Thuis / Uit</span>
+    <span class="info-waarde">${uitThuis}</span>
+  </div>`;
+  if (toonVeld.tijdstip) rijen += `<div class="info-rij">
+    <span class="info-label">Tijdstip</span>
+    <span class="info-waarde ${!tijdstip ? 'ntb' : ''}">${tijdstip || '— nog niet bekend —'}</span>
+  </div>`;
+  if (toonVeld.plaats) rijen += `<div class="info-rij">
+    <span class="info-label">Locatie</span>
+    <span class="info-waarde ${!plaats ? 'ntb' : ''}">${plaats || '— nog niet bekend —'}</span>
+  </div>`;
+  if (toonVeld.vlag) rijen += `<div class="info-rij">
+    <span class="info-label">Vlagouder</span>
+    <span class="info-waarde ${!vlag ? 'ntb' : ''}">${vlag || '— nog niet bekend —'}</span>
+  </div>`;
+  if (toonVeld.rijders) rijen += `<div class="info-rij">
+    <span class="info-label">Rijders</span>
+    <span class="info-waarde">${rijders.length > 0
+      ? `<div class="rijders-lijst">${rijders.map(r=>`<span class="rijder-chip">${r}</span>`).join('')}</div>`
+      : '<span class="ntb">— nog niet bekend —</span>'
+    }</span>
+  </div>`;
+  if (toonVeld.kantine && (rij.bardienst || rij.keuken)) rijen += `<div class="info-rij">
+    <span class="info-label">Kantine</span>
+    <span class="info-waarde">Bar: ${rij.bardienst||'—'} · Keuken: ${rij.keuken||'—'}</span>
+  </div>`;
+  if (toonVeld.eindstand && eindstand) rijen += `<div class="info-rij">
+    <span class="info-label">Eindstand</span>
+    <span class="info-waarde"><span class="eindstand-badge">${eindstand}</span></span>
+  </div>`;
+
+  return `<div class="kaart">
+    <div class="kaart-header">
+      <span>${datum}</span>
+      ${tijdstip ? `<span class="datum-badge">🕐 ${tijdstip}</span>` : ''}
+      ${uitThuis ? `<span class="thuis-uit ${thuisBadge}">${uitThuis}</span>` : ''}
+    </div>
+    <div class="kaart-body">
+      ${rijen}
+      <button class="bewerk-kaart-btn" onclick="openBewerk(${index})">✏️ Bewerken</button>
+    </div>
+  </div>`;
+}
+
+function renderOverzicht() {
+  const el = document.getElementById('overzicht-lijst');
+  if (!schema.length) { el.innerHTML = '<div class="laden">Geen data gevonden.</div>'; return; }
+  el.innerHTML = schema.map((r,i) => buildKaart(r, i, {team:true,uitthuis:true,tijdstip:true,plaats:true,vlag:true,rijders:true,kantine:true,eindstand:true})).join('');
+}
+
+function renderVlag() {
+  const el = document.getElementById('vlag-lijst');
+  el.innerHTML = schema.filter(r => !r.bijzonder).map((r) => {
+    return buildKaart(r, schema.indexOf(r), {team:true,uitthuis:true,tijdstip:true,vlag:true});
+  }).join('');
+}
+
+function renderRijschema() {
+  const el = document.getElementById('rijschema-lijst');
+  const uitwedstrijden = schema.filter(r => !r.bijzonder && r.uitthuis && r.uitthuis.toLowerCase().includes('uit'));
+  el.innerHTML = uitwedstrijden.length
+    ? uitwedstrijden.map(r => buildKaart(r, schema.indexOf(r), {team:true,uitthuis:false,tijdstip:true,plaats:true,rijders:true})).join('')
+    : '<div class="laden">Geen uitwedstrijden gevonden.</div>';
+}
+
+function renderKantine() {
+  const el = document.getElementById('kantine-lijst');
+  const kantineRijen = schema.filter(r => r.bardienst || r.keuken);
+  el.innerHTML = kantineRijen.length
+    ? kantineRijen.map(r => buildKaart(r, schema.indexOf(r), {team:true,tijdstip:false,uitthuis:false,kantine:true})).join('')
+    : '<div class="laden">Geen kantinediensten gevonden.</div>';
+}
+
+function renderSpelers() {
+  document.getElementById('spelers-grid').innerHTML = SPELERS.map(s => `
+    <div class="speler-kaart">
+      <div class="speler-avatar">${s[0]}</div>
+      <div class="speler-naam">${s}</div>
+    </div>`).join('');
+}
+
+function toonSectie(id, btn) {
+  document.querySelectorAll('.sectie').forEach(s => s.classList.remove('actief'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('actief'));
+  document.getElementById('sectie-' + id).classList.add('actief');
+  btn.classList.add('actief');
+}
+
+function toggleBewerken() {
+  if (bewerkenActief) {
+    bewerkenActief = false;
+    document.body.classList.remove('bewerkmode');
+    document.getElementById('editToggleBtn').classList.remove('actief');
+    document.getElementById('editToggleBtn').innerHTML = '✏️ <span>Bewerken</span>';
+    document.getElementById('statusBar').classList.remove('zichtbaar');
+  } else {
+    document.getElementById('pinOverlay').classList.add('actief');
+    document.getElementById('pinInput').value = '';
+    document.getElementById('pinFout').style.display = 'none';
+    setTimeout(() => document.getElementById('pinInput').focus(), 100);
+  }
+}
+
+function checkPin() {
+  if (document.getElementById('pinInput').value === PINCODE) {
+    document.getElementById('pinOverlay').classList.remove('actief');
+    bewerkenActief = true;
+    document.body.classList.add('bewerkmode');
+    document.getElementById('editToggleBtn').classList.add('actief');
+    document.getElementById('editToggleBtn').innerHTML = '🔒 <span>Sluiten</span>';
+    document.getElementById('statusBar').classList.add('zichtbaar');
+    toonToast('Bewerkingsmodus actief', 'succes');
+  } else {
+    document.getElementById('pinFout').style.display = 'block';
+    document.getElementById('pinInput').value = '';
+    document.getElementById('pinInput').focus();
+  }
+}
+
+function sluitPin() { document.getElementById('pinOverlay').classList.remove('actief'); }
+
+function openBewerk(index) {
+  if (!bewerkenActief) return;
+  const r = schema[index];
+  document.getElementById('bewerkRij').value = index;
+  document.getElementById('b-datum').value    = formatDatum(r.datum);
+  document.getElementById('b-uitthuis').value = r.uitthuis || '';
+  document.getElementById('b-tijdstip').value = formatTijd(r.tijdstip);
+  document.getElementById('b-team').value     = isLeeg(r.team) ? '' : r.team;
+  document.getElementById('b-plaats').value   = isLeeg(r.plaats) ? '' : r.plaats;
+  document.getElementById('b-vlag').value     = isLeeg(r.vlag) ? '' : r.vlag;
+  document.getElementById('b-rijder1').value  = isLeeg(r.rijder1) ? '' : r.rijder1;
+  document.getElementById('b-rijder2').value  = isLeeg(r.rijder2) ? '' : r.rijder2;
+  document.getElementById('b-rijder3').value  = isLeeg(r.rijder3) ? '' : r.rijder3;
+  document.getElementById('b-rijder4').value  = isLeeg(r.rijder4) ? '' : r.rijder4;
+  document.getElementById('b-eindstand').value= isLeeg(r.eindstand) ? '' : r.eindstand;
+  document.getElementById('b-bardienst').value= r.bardienst || '';
+  document.getElementById('b-keuken').value   = r.keuken || '';
+  document.getElementById('bewerkOverlay').classList.add('actief');
+}
+
+function sluitBewerk() { document.getElementById('bewerkOverlay').classList.remove('actief'); }
+
+async function slaOp() {
+  const btn = document.getElementById('opslaanBtn');
+  btn.disabled = true; btn.textContent = '⏳ Opslaan...';
+  const index = parseInt(document.getElementById('bewerkRij').value);
+  const update = {
+    actie: 'schrijf',
+    rijnummer: schema[index]._rijnummer,
+    uitthuis:  document.getElementById('b-uitthuis').value,
+    tijdstip:  document.getElementById('b-tijdstip').value,
+    team:      document.getElementById('b-team').value,
+    plaats:    document.getElementById('b-plaats').value,
+    vlag:      document.getElementById('b-vlag').value,
+    rijder1:   document.getElementById('b-rijder1').value,
+    rijder2:   document.getElementById('b-rijder2').value,
+    rijder3:   document.getElementById('b-rijder3').value,
+    rijder4:   document.getElementById('b-rijder4').value,
+    eindstand: document.getElementById('b-eindstand').value,
+    bardienst: document.getElementById('b-bardienst').value,
+    keuken:    document.getElementById('b-keuken').value,
+  };
+  try {
+    const resp = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify(update) });
+    const result = await resp.json();
+    if (result.status === 'ok') {
+      Object.assign(schema[index], update);
+      sluitBewerk();
+      renderAlles();
+      toonToast('✅ Wijzigingen opgeslagen!', 'succes');
+    } else {
+      toonToast('❌ Fout: ' + (result.error || 'onbekend'), 'fout');
+    }
+  } catch(e) {
+    toonToast('❌ Verbindingsfout. Probeer opnieuw.', 'fout');
+  }
+  btn.disabled = false; btn.textContent = '💾 Opslaan';
+}
+
+function toonToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (type||'');
+  t.classList.add('zichtbaar');
+  setTimeout(() => t.classList.remove('zichtbaar'), 3200);
+}
+
+laadSchema();
 </script>
 </body>
 </html>
